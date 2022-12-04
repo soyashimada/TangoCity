@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomCalendarMonth" parent="@style/Theme.TangoCity">
+        <item name="android:textColorPrimary">@color/bold_text</item>
+    </style>
+
+    <style name="CustomCalendarDay" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/normal_text</item>
+    </style>
+
+    <style name="CustomCalendarWeek" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/normal_text</item>
+    </style>
+
+    <style name="boldText">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/bold_text</item>
+    </style>
+
+    <style name="normalText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/normal_text</item>
+    </style>
+</resources>
