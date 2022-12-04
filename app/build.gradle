@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "nl.hva.tangocity"
         minSdk 32
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -35,6 +35,11 @@ android {
 }
 
 dependencies {
+    // The view calendar library
+    implementation 'com.kizitonwose.calendar:view:2.0.4'
+
+    // The compose calendar library
+    implementation 'com.kizitonwose.calendar:compose:2.0.4'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'

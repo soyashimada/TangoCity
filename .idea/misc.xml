@@ -4,10 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_add_circle_black_24.xml" value="0.123" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1905" />
+        <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.123" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.123" />
+        <entry key="app/src/main/res/font/roboto.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1147705078125" />
+        <entry key="app/src/main/res/layout/calendar_day_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/calendar_day_title_text.xml" value="0.15020263424518743" />
+        <entry key="app/src/main/res/layout/calendar_day_titles_container.xml" value="0.1118659420289855" />
+        <entry key="app/src/main/res/layout/calendar_month_title_text.xml" value="0.15020263424518743" />
+        <entry key="app/src/main/res/layout/calendar_month_titles_container.xml" value="0.15020263424518743" />
+        <entry key="app/src/main/res/layout/fragment_create.xml" value="0.12222222222222222" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.19067028985507245" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.19067028985507245" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.38552188552188554" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.19067028985507245" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.3098958333333333" />
       </map>
@@ -18,5 +28,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
   </component>
 </project>
