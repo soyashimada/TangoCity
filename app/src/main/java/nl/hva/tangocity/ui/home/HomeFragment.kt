@@ -5,9 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.kizitonwose.calendar.core.CalendarDay
+import com.kizitonwose.calendar.core.daysOfWeek
+import com.kizitonwose.calendar.view.MonthDayBinder
+import nl.hva.tangocity.DayViewContainer
+import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.FragmentHomeBinding
+import java.time.YearMonth
+import java.time.format.TextStyle
+import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -28,10 +37,36 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        val calendarView = binding.reviewCalendar
+        val currentMonth = YearMonth.now()
+        val startMonth = currentMonth.minusMonths(100)  // Adjust as needed
+        val endMonth = currentMonth.plusMonths(100)  // Adjust as needed
+        val daysOfWeek = daysOfWeek()// Available from the library
+
+        val titlesContainer = binding.root.findViewById<ViewGroup>(R.id.titlesContainer)
+        titlesContainer.children
+            .map { it as TextView }
+            .forEachIndexed { index, textView ->
+                val dayOfWeek = daysOfWeek[index]
+                val title = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
+                textView.text = title
+            }
+
+        calendarView.setup(startMonth, endMonth, daysOfWeek.first())
+        calendarView.scrollToMonth(currentMonth)
+
+        calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
+            // Called only when a new container is needed.
+            override fun create(view: View) = DayViewContainer(view)
+
+            // Called every time we need to reuse a container.
+            override fun bind(container: DayViewContainer, data: CalendarDay) {
+                container.textView.text = data.date.dayOfMonth.toString()
+            }
         }
+
+
+
         return root
     }
 
