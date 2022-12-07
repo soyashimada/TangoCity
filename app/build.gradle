@@ -35,9 +35,10 @@ android {
 }
 
 dependencies {
+    //AnyChart
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
     // The view calendar library
     implementation 'com.kizitonwose.calendar:view:2.0.4'
-
     // The compose calendar library
     implementation 'com.kizitonwose.calendar:compose:2.0.4'
 
