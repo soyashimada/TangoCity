@@ -8,19 +8,23 @@ import android.widget.TextView
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.view.MonthDayBinder
 import nl.hva.tangocity.DayViewContainer
 import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.FragmentHomeBinding
+import nl.hva.tangocity.ui.DeckAdapter
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.*
 
+
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: nl.hva.tangocity.databinding.FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -33,9 +37,14 @@ class HomeFragment : Fragment() {
     ): View {
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
+        val deckAdapter = DeckAdapter(requireContext());
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        binding.rvDecks.layoutManager =
+            StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+        binding.rvDecks.adapter = deckAdapter;
 
         val calendarView = binding.reviewCalendar
         val currentMonth = YearMonth.now()
@@ -43,7 +52,7 @@ class HomeFragment : Fragment() {
         val endMonth = currentMonth.plusMonths(100)  // Adjust as needed
         val daysOfWeek = daysOfWeek()// Available from the library
 
-        val titlesContainer = binding.root.findViewById<ViewGroup>(R.id.titlesContainer)
+        val titlesContainer = root.findViewById<ViewGroup>(R.id.titlesContainer)
         titlesContainer.children
             .map { it as TextView }
             .forEachIndexed { index, textView ->
@@ -64,8 +73,6 @@ class HomeFragment : Fragment() {
                 container.textView.text = data.date.dayOfMonth.toString()
             }
         }
-
-
 
         return root
     }
