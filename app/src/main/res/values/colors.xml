@@ -13,4 +13,7 @@
     <color name="normal_text">#99FFFFFF</color>
     <color name="bold_text">#D9FFFFFF</color>
     <color name="normal_icon">#99FFFFFF</color>
+    <color name="new_color">#D982B4FF</color>
+    <color name="young_color">#D95AF9AD</color>
+    <color name="mature_color">#D91EA644</color>
 </resources>
