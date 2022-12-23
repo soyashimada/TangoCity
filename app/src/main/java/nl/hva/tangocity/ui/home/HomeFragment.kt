@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -45,6 +47,8 @@ class HomeFragment : Fragment() {
         binding.rvDecks.layoutManager =
             StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
         binding.rvDecks.adapter = deckAdapter;
+
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolBar)
 
         val calendarView = binding.reviewCalendar
         val currentMonth = YearMonth.now()
