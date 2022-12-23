@@ -22,4 +22,21 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/normal_text</item>
     </style>
+
+    <style name="normalTabText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/normal_text</item>
+    </style>
+
+    <style name="boldTabText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/bold_text</item>
+    </style>
+
+    <style name="buttonText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
 </resources>
