@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.kizitonwose.calendar.core.CalendarDay
@@ -32,6 +33,8 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var navController: NavController
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,16 +42,18 @@ class HomeFragment : Fragment() {
     ): View {
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
-        val deckAdapter = DeckAdapter(requireContext());
+        val deckAdapter = DeckAdapter(requireContext()) {
+            deckClicked()
+        }
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolBar)
+
         binding.rvDecks.layoutManager =
             StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
-        binding.rvDecks.adapter = deckAdapter;
-
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolBar)
+        binding.rvDecks.adapter = deckAdapter
 
         val calendarView = binding.reviewCalendar
         val currentMonth = YearMonth.now()
@@ -78,11 +83,19 @@ class HomeFragment : Fragment() {
             }
         }
 
+        navController = findNavController()
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun deckClicked() {
+        navController.navigate(
+            R.id.action_HomeFragment_to_ReviewFragment
+        )
     }
 }

@@ -16,12 +16,12 @@ import nl.hva.tangocity.databinding.ItemDeckBinding
 import kotlin.collections.ArrayList
 
 
-class DeckAdapter(private val context: Context): RecyclerView.Adapter<DeckAdapter.ViewHolder>() {
+class DeckAdapter(private val context: Context, private val clickListener: () -> Unit): RecyclerView.Adapter<DeckAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private val binding = ItemDeckBinding.bind(itemView)
         private val deckListView = binding.root.findViewById(R.id.deck_list_chart) as AnyChartView
 
-        fun databind() {
+        fun databind(clickListener: () -> Unit) {
             val data: MutableList<DataEntry> = ArrayList()
             data.add( getDataEntry("New", (0..100).random(), getColor(R.color.new_color)))
             data.add( getDataEntry("Mature", (0..100).random(), getColor(R.color.mature_color)))
@@ -31,20 +31,24 @@ class DeckAdapter(private val context: Context): RecyclerView.Adapter<DeckAdapte
             chart.background().fill(getColor(R.color.background))
             chart.innerRadius("85%")
             chart.legend(false)
-            chart.tooltip().useHtml(true)
+            chart.labels(false)
+//            chart.tooltip().useHtml(true)
 
 //            val centerLabel = chart.label(1)
 //            centerLabel.useHtml(true)
-//            centerLabel.text("<p style='font-size: 14px;'><b>Deck 1</b></p><br>New: 10<br>Mature: 12<br>Young: 14")
-//            centerLabel.useHtml().
+//            centerLabel.text("<b>Deck 1</b><br>New: 10<br>Mature: 12<br>Young: 14")
+////            centerLabel.useHtml().
 //            centerLabel.hAlign("center")
 //            centerLabel.fontColor(getColor(R.color.bold_text))
-//            centerLabel.offsetX("48%");
-//            centerLabel.offsetY("50%");
-//            centerLabel.anchor("center");
+//            centerLabel.offsetX("48%")
+//            centerLabel.offsetY("50%")
+//            centerLabel.anchor("center")
 
             chart.data(data)
             deckListView.setChart(chart)
+
+            //set click listener
+            binding.deckTitle.setOnClickListener{ clickListener() }
         }
     }
 
@@ -62,14 +66,14 @@ class DeckAdapter(private val context: Context): RecyclerView.Adapter<DeckAdapte
      */
     override fun getItemCount(): Int {
 //        return decks.size
-        return 5
+        return 10
     }
 
     /**
      * Called by RecyclerView to display the data at the specified position.
      */
     override fun onBindViewHolder(holder: DeckAdapter.ViewHolder, position: Int) {
-        holder.databind()
+        holder.databind(clickListener)
     }
 
     private fun getColor(color: Int): String{
