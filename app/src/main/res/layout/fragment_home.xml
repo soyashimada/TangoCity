@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="Welcome!!"
-                android:theme="@style/boldText"
+                style="@style/boldText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,7 @@
                 android:layout_margin="16dp"
                 android:text="Calendar"
                 android:textSize="20sp"
-                android:theme="@style/boldText"
+                style="@style/boldText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/welcome_text" />
 
@@ -92,7 +92,7 @@
                     android:layout_height="0dp"
                     android:text="April 2018"
                     android:textSize="14sp"
-                    android:theme="@style/normalText"
+                    style="@style/normalText"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/previous_month_img"
                     app:layout_constraintStart_toEndOf="@id/next_month_img"
@@ -142,7 +142,7 @@
                 android:layout_margin="16dp"
                 android:text="Decks"
                 android:textSize="20sp"
-                android:theme="@style/boldText"
+                style="@style/boldText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/review_calendar_layout" />
 
