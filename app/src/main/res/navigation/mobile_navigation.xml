@@ -14,16 +14,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_create"
-        android:name="nl.hva.tangocity.ui.create.CreateFragment"
-        tools:layout="@layout/fragment_create" />
-
-    <fragment
         android:id="@+id/navigation_review"
         android:name="nl.hva.tangocity.ui.review.ReviewFragment"
         tools:layout="@layout/fragment_review" >
-        <action android:id="@+id/action_ReviewFragment_to_HomeFragment"
-            app:destination="@id/navigation_home" />
     </fragment>
 
 </navigation>
