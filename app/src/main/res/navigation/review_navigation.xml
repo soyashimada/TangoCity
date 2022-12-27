@@ -10,4 +10,9 @@
         android:name="nl.hva.tangocity.ui.review.study.StudyFragment"
         tools:layout="@layout/fragment_study" />
 
+    <fragment
+        android:id="@+id/navigation_edit"
+        android:name="nl.hva.tangocity.ui.review.edit.EditFragment"
+        tools:layout="@layout/fragment_edit" />
+
 </navigation>
