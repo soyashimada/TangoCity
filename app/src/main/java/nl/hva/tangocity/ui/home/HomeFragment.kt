@@ -16,10 +16,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.view.MonthDayBinder
-import nl.hva.tangocity.DayViewContainer
 import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.FragmentHomeBinding
-import nl.hva.tangocity.ui.DeckAdapter
+import nl.hva.tangocity.ui.home.calendar.DayViewContainer
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.*

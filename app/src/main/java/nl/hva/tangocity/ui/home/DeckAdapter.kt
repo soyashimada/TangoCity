@@ -1,4 +1,4 @@
-package nl.hva.tangocity.ui
+package nl.hva.tangocity.ui.home
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -55,7 +55,7 @@ class DeckAdapter(private val context: Context, private val clickListener: () ->
     /**
      * Creates and returns a ViewHolder object, inflating a standard layout called simple_list_item_1.
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeckAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_deck, parent, false)
         )
@@ -72,7 +72,7 @@ class DeckAdapter(private val context: Context, private val clickListener: () ->
     /**
      * Called by RecyclerView to display the data at the specified position.
      */
-    override fun onBindViewHolder(holder: DeckAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.databind(clickListener)
     }
 
