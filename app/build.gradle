@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -35,6 +36,9 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
+
     implementation 'com.google.android.material:material:1.7.0'
     //AnyChart
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'

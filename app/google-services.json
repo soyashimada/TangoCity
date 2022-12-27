@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "747996418146",
+    "project_id": "tangocity-94332",
+    "storage_bucket": "tangocity-94332.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747996418146:android:942e4dffdf464398af813b",
+        "android_client_info": {
+          "package_name": "nl.hva.tangocity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747996418146-07jbvcjt2u0d9o6a8lag6hsrdo5iihpd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBla1vchoi1cGaZe9d1N6yBE8YkH_Hunec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747996418146-07jbvcjt2u0d9o6a8lag6hsrdo5iihpd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
