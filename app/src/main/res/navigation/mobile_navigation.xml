@@ -14,6 +14,10 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_create"
+        android:name="nl.hva.tangocity.ui.create.CreateDialogFragment" />
+
+    <fragment
         android:id="@+id/navigation_review"
         android:name="nl.hva.tangocity.ui.review.ReviewFragment"
         tools:layout="@layout/fragment_review" >

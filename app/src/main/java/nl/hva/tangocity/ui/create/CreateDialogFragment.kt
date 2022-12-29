@@ -10,7 +10,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.CreateDialogBinding
 import nl.hva.tangocity.viewModel.DeckViewModel
 
@@ -30,17 +29,15 @@ class CreateDialogFragment : DialogFragment() {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
 
         binding.cancelButton.setOnClickListener{
-            findNavController().navigate(R.id.navigation_home)
-
-            transaction.hide(this).commit()
+            findNavController().popBackStack()
+            transaction.remove(this).commit()
         }
 
         binding.doneButton.setOnClickListener{
             viewModel.createDeckAndCard(binding.deckNameInput.text.toString(),
                 binding.questionInput.text.toString(), binding.answerInput.text.toString())
-
-            findNavController().navigate(R.id.navigation_home)
-            transaction.hide(this).commit()
+            findNavController().popBackStack()
+            transaction.remove(this).commit()
         }
 
         return root

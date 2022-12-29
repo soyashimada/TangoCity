@@ -50,14 +50,11 @@ class MainActivity : AppCompatActivity() {
             when(item.itemId)
             {
                 R.id.navigation_create -> {
+                    navController.navigate(R.id.navigation_create)
                     val transaction = supportFragmentManager.beginTransaction()
-                    // For a little polish, specify a transition animation
                     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    // To make it fullscreen, use the 'content' root view as the container
-                    // for the fragment, which is always the root view for the activity
                     transaction
-                        .add(android.R.id.content, CreateDialogFragment())
-                        .addToBackStack(null)
+                        .add(R.id.container, CreateDialogFragment())
                         .commit()
                 }
 
