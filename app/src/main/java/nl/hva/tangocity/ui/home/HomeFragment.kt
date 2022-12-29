@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -18,7 +19,9 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.view.MonthDayBinder
 import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.FragmentHomeBinding
+import nl.hva.tangocity.model.Deck
 import nl.hva.tangocity.ui.home.calendar.DayViewContainer
+import nl.hva.tangocity.viewModel.DeckViewModel
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.*
@@ -27,6 +30,7 @@ import java.util.*
 class HomeFragment : Fragment() {
 
     private var _binding: nl.hva.tangocity.databinding.FragmentHomeBinding? = null
+    private val viewModel: DeckViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -39,20 +43,12 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-        val deckAdapter = DeckAdapter(requireContext()) {
-            deckClicked()
-        }
+        viewModel.initialize()
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         (activity as AppCompatActivity).setSupportActionBar(binding.toolBar)
-
-        binding.rvDecks.layoutManager =
-            StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
-        binding.rvDecks.adapter = deckAdapter
 
         val calendarView = binding.reviewCalendar
         val currentMonth = YearMonth.now()
@@ -85,6 +81,18 @@ class HomeFragment : Fragment() {
         navController = findNavController()
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.decks.observe(viewLifecycleOwner){
+            val deckAdapter = DeckAdapter(viewModel.decks.value ?: arrayListOf<Deck>(), requireContext()) {
+                deckClicked()
+            }
+            binding.rvDecks.layoutManager =
+                StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+            binding.rvDecks.adapter = deckAdapter
+        }
     }
 
     override fun onDestroyView() {

@@ -13,41 +13,46 @@ import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.charts.Pie
 import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.ItemDeckBinding
+import nl.hva.tangocity.model.Deck
 import kotlin.collections.ArrayList
 
 
-class DeckAdapter(private val context: Context, private val clickListener: () -> Unit): RecyclerView.Adapter<DeckAdapter.ViewHolder>() {
+class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Context, private val clickListener: () -> Unit): RecyclerView.Adapter<DeckAdapter.ViewHolder>() {
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
         private val binding = ItemDeckBinding.bind(itemView)
         private val deckListView = binding.root.findViewById(R.id.deck_list_chart) as AnyChartView
 
-        fun databind(clickListener: () -> Unit) {
-            val data: MutableList<DataEntry> = ArrayList()
-            data.add( getDataEntry("New", (0..100).random(), getColor(R.color.new_color)))
-            data.add( getDataEntry("Mature", (0..100).random(), getColor(R.color.mature_color)))
-            data.add( getDataEntry("Young", (0..100).random(), getColor(R.color.young_color)))
-
+        fun databind(deck: Deck, clickListener: () -> Unit) {
             val chart : Pie = AnyChart.pie()
             chart.background().fill(getColor(R.color.background))
             chart.innerRadius("85%")
             chart.legend(false)
             chart.labels(false)
-//            chart.tooltip().useHtml(true)
 
-//            val centerLabel = chart.label(1)
-//            centerLabel.useHtml(true)
-//            centerLabel.text("<b>Deck 1</b><br>New: 10<br>Mature: 12<br>Young: 14")
-////            centerLabel.useHtml().
-//            centerLabel.hAlign("center")
-//            centerLabel.fontColor(getColor(R.color.bold_text))
-//            centerLabel.offsetX("48%")
-//            centerLabel.offsetY("50%")
-//            centerLabel.anchor("center")
+            val data: MutableList<DataEntry> = ArrayList()
+            var newCount = 0
+            var matureCount = 0
+            var youngCount = 0
+            deck.cards.forEach{ card ->
+                if (card.interval < 31) {
+                    newCount += 1
+                } else if (card.interval in 32..61){
+                    youngCount += 1
+                } else {
+                    matureCount += 1
+                }
+            }
+            data.add( getDataEntry("New", newCount, getColor(R.color.new_color)))
+            data.add( getDataEntry("Mature", matureCount, getColor(R.color.mature_color)))
+            data.add( getDataEntry("Young", youngCount, getColor(R.color.young_color)))
 
             chart.data(data)
             deckListView.setChart(chart)
 
             //set click listener
+            binding.deckTitle.text = deck.name
             binding.deckTitle.setOnClickListener{ clickListener() }
         }
     }
@@ -65,15 +70,14 @@ class DeckAdapter(private val context: Context, private val clickListener: () ->
      * Returns the size of the list
      */
     override fun getItemCount(): Int {
-//        return decks.size
-        return 10
+        return decks.size
     }
 
     /**
      * Called by RecyclerView to display the data at the specified position.
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.databind(clickListener)
+        holder.databind(decks[position], clickListener)
     }
 
     private fun getColor(color: Int): String{
