@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -30,11 +32,9 @@ import java.util.*
 class HomeFragment : Fragment() {
 
     private var _binding: nl.hva.tangocity.databinding.FragmentHomeBinding? = null
-    private val viewModel: DeckViewModel by activityViewModels()
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private val viewModel: DeckViewModel by activityViewModels()
 
     private lateinit var navController: NavController
 
@@ -86,8 +86,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.decks.observe(viewLifecycleOwner){
-            val deckAdapter = DeckAdapter(viewModel.decks.value ?: arrayListOf<Deck>(), requireContext()) {
-                deckClicked()
+            val deckAdapter = DeckAdapter(viewModel.decks.value ?: arrayListOf(), requireContext()) { deckId: Int ->
+                deckClicked(deckId)
             }
             binding.rvDecks.layoutManager =
                 StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
@@ -100,7 +100,8 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun deckClicked() {
+    private fun deckClicked(position: Int) {
+        setFragmentResult("selectedDeck", bundleOf("position" to position))
         navController.navigate(
             R.id.action_HomeFragment_to_ReviewFragment
         )

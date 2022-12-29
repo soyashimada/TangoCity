@@ -17,14 +17,14 @@ import nl.hva.tangocity.model.Deck
 import kotlin.collections.ArrayList
 
 
-class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Context, private val clickListener: () -> Unit): RecyclerView.Adapter<DeckAdapter.ViewHolder>() {
+class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Context, private val clickListener: (Int) -> Unit): RecyclerView.Adapter<DeckAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         private val binding = ItemDeckBinding.bind(itemView)
         private val deckListView = binding.root.findViewById(R.id.deck_list_chart) as AnyChartView
 
-        fun databind(deck: Deck, clickListener: () -> Unit) {
+        fun databind(deck: Deck, position: Int, clickListener: (Int) -> Unit) {
             deckListView.setBackgroundColor(getColor(R.color.background))
 
             val chart : Pie = AnyChart.pie()
@@ -55,7 +55,7 @@ class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Conte
 
             //set click listener
             binding.deckTitle.text = deck.name
-            binding.deckTitle.setOnClickListener{ clickListener() }
+            binding.deckTitle.setOnClickListener{ clickListener(position) }
         }
     }
 
@@ -79,7 +79,7 @@ class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Conte
      * Called by RecyclerView to display the data at the specified position.
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.databind(decks[position], clickListener)
+        holder.databind(decks[position], position, clickListener)
     }
 
     private fun getColor(color: Int): String{
