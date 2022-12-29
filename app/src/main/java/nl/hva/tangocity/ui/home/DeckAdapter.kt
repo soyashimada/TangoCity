@@ -25,6 +25,8 @@ class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Conte
         private val deckListView = binding.root.findViewById(R.id.deck_list_chart) as AnyChartView
 
         fun databind(deck: Deck, clickListener: () -> Unit) {
+            deckListView.setBackgroundColor(getColor(R.color.background))
+
             val chart : Pie = AnyChart.pie()
             chart.background().fill(getColor(R.color.background))
             chart.innerRadius("85%")
