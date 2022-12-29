@@ -24,12 +24,23 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
         viewModelScope.launch {
             try {
                 deckRepository.initialize()
-
                 if (decks.value == null) {
                     _errorText.value = "No deck is set"
                 }
             } catch (ex: DeckRepository.RetrievalError) {
                 val errorMsg = "Something went wrong while retrieving deck"
+                Log.e(TAG, ex.message ?: errorMsg)
+                _errorText.value = errorMsg
+            }
+        }
+    }
+
+    fun createDeckAndCard(deckName: String, question: String, answer: String) {
+        viewModelScope.launch {
+            try {
+                deckRepository.createDeckAndCard(deckName, question, answer)
+            } catch (ex: DeckRepository.SaveError) {
+                val errorMsg = "Something went wrong while saving the deck"
                 Log.e(TAG, ex.message ?: errorMsg)
                 _errorText.value = errorMsg
             }

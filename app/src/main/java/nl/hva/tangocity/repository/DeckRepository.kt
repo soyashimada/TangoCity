@@ -16,8 +16,8 @@ class DeckRepository {
     private var cardDocument =
         firestore.collection("Cards")
 
-    private val lastDeckId: MutableLiveData<Int> = MutableLiveData(2)
-    private val lastCardId: MutableLiveData<Int> = MutableLiveData(2)
+    private val lastDeckId: MutableLiveData<Int> = MutableLiveData(1)
+    private val lastCardId: MutableLiveData<Int> = MutableLiveData(1)
 
     private val _decks: MutableLiveData<ArrayList<Deck>> = MutableLiveData()
     val decks: LiveData<ArrayList<Deck>>
@@ -39,34 +39,39 @@ class DeckRepository {
                     .await()
 
                 val deckList = arrayListOf<Deck>()
+                deckData.sortedBy { deck -> deck.id }
 
-//                deckData.sortedBy { deck -> deck.id }
                 deckData.forEach {
                     val id = it.id
-                    val name = it.getString("name").toString()
+                    val name = it.get("name").toString()
                     val cardsInDeck :ArrayList<Card> = arrayListOf()
 
                     cardData.forEach{ card ->
                         val cardId = card.id
-                        if ( card.get("deck") == it.reference ){
+                        if ( card.get("deckRef") == it.reference ){
                             val question = card.get("question").toString()
                             val answer = card.get("answer").toString()
                             val repetition = card.get("repetition").toString()
-                            val easinessFactor = card.get("easiness_factor").toString()
+                            val easinessFactor = card.get("easinessFactor").toString()
                             val interval = card.get("interval").toString()
-                            val nextDate = card.get("next_date").toString()
-                            val lastResult = card.get("last_result").toString()
+                            val nextDate = card.get("nextDate").toString()
+                            val lastResult = card.get("lastResult").toString()
 
                             cardsInDeck.add( Card( cardId.toInt(), question, answer,
                                 repetition.toInt(), easinessFactor.toFloat(),
                                 interval.toInt(), nextDate, lastResult.toInt() ))
                         }
                     }
+                    cardsInDeck.sortBy { card -> card.id }
+                    if ((lastCardId.value ?: 1) < cardsInDeck[cardsInDeck.size - 1].id){
+                        lastCardId.value = cardsInDeck[cardsInDeck.size - 1].id
+                    }
 
                     deckList += Deck(id.toInt(), name, cardsInDeck)
                     deckList.sortBy { deck -> deck.id }
                 }
 
+                lastDeckId.value = deckList[deckList.size -1].id
                 _decks.value = deckList
             }
         } catch (e: Exception) {
@@ -75,9 +80,22 @@ class DeckRepository {
         }
     }
 
-    suspend fun createDeck(deck: Deck) {
+    suspend fun createDeckAndCard(deckName: String, question: String, answer: String) {
         try {
-            val id = lastDeckId.value!!.plus(1)
+            val deckId = createDeck(deckName)
+            createCard(deckId, question, answer)
+        } catch (e: Exception) {
+            throw SaveError(e.message.toString(), e)
+        }
+    }
+
+    suspend fun createDeck(deckName: String) : Int {
+        try {
+            val id = lastDeckId.value?.plus(1) ?: 1
+            val deck = hashMapOf(
+                "name" to deckName
+            )
+
             withTimeout(5_000) {
                 deckDocument
                     .document(id.toString())
@@ -87,14 +105,27 @@ class DeckRepository {
                 _createSuccess.value = true
                 lastDeckId.value = id
             }
+
+            return id
         } catch (e: Exception) {
             throw SaveError(e.message.toString(), e)
         }
     }
 
-    suspend fun createCard(card: Card) {
+    suspend fun createCard(deckId: Int, question: String, answer: String) {
         try {
-            val id = lastCardId.value!!.plus(1)
+            val id = lastCardId.value?.plus(1) ?: 1
+            val card = hashMapOf(
+                "question" to question,
+                "answer" to answer,
+                "deckRef" to deckDocument.document(deckId.toString()),
+                "easinessFactor" to 0,
+                "interval" to 0,
+                "lastResult" to 0,
+                "nextDate" to "null",
+                "repetition" to 0
+            )
+
             withTimeout(5_000) {
                 cardDocument
                     .document(id.toString())
