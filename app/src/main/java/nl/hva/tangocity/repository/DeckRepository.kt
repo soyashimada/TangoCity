@@ -58,7 +58,7 @@ class DeckRepository {
                             val lastResult = card.get("lastResult").toString()
 
                             cardsInDeck.add( Card( cardId.toInt(), question, answer,
-                                repetition.toInt(), easinessFactor.toFloat(),
+                                repetition.toInt(), easinessFactor.toDouble(),
                                 interval.toInt(), nextDate, lastResult.toInt() ))
                         }
                     }
@@ -89,7 +89,7 @@ class DeckRepository {
         }
     }
 
-    suspend fun createDeck(deckName: String) : Int {
+    private suspend fun createDeck(deckName: String) : Int {
         try {
             val id = lastDeckId.value?.plus(1) ?: 1
             val deck = hashMapOf(
@@ -112,9 +112,9 @@ class DeckRepository {
         }
     }
 
-    suspend fun createCard(deckId: Int, question: String, answer: String) {
+    suspend fun createCard(deckId: Int, question: String, answer: String, cardId: Int? = null): Int {
         try {
-            val id = lastCardId.value?.plus(1) ?: 1
+            val id = cardId ?: (lastCardId.value?.plus(1) ?: 1)
             val card = hashMapOf(
                 "question" to question,
                 "answer" to answer,
@@ -135,6 +135,8 @@ class DeckRepository {
                 _createSuccess.value = true
                 lastCardId.value = id
             }
+
+            return id
         } catch (e: Exception) {
             throw SaveError(e.message.toString(), e)
         }
