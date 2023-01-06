@@ -62,6 +62,7 @@ class DeckRepository {
 
                             val nextCal: Calendar = Calendar.getInstance()
                             nextCal.time = nextDate.toDate()
+                            nextCal.set(Calendar.HOUR_OF_DAY, 0)
 
                             cardsInDeck.add( Card( cardId.toInt(), question, answer,
                                 repetition.toInt(), easinessFactor.toDouble(),
