@@ -2,14 +2,14 @@ package nl.hva.tangocity
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import nl.hva.tangocity.databinding.ActivityMainBinding
-import nl.hva.tangocity.ui.create.CreateDialogFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,11 +26,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_create
-            )
-        )
+        appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
@@ -39,6 +35,14 @@ class MainActivity : AppCompatActivity() {
                 item,
                 navController
             )
+        }
+
+        navController.addOnDestinationChangedListener {_, destination, _ ->
+            if(destination.id == R.id.navigation_create) {
+                navView.visibility = View.GONE
+            } else {
+                navView.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -50,12 +54,8 @@ class MainActivity : AppCompatActivity() {
             when(item.itemId)
             {
                 R.id.navigation_create -> {
-                    navController.navigate(R.id.navigation_create)
-                    val transaction = supportFragmentManager.beginTransaction()
-                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    transaction
-                        .add(R.id.container, CreateDialogFragment())
-                        .commit()
+                    supportFragmentManager.setFragmentResult("new_deck", bundleOf())
+                    onCreateFragment(findNavController(R.id.nav_host_fragment_activity_main))
                 }
 
                 else -> navController.navigate(item.itemId)
@@ -70,5 +70,9 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    fun onCreateFragment(navController: NavController) {
+        navController.navigate(R.id.navigation_create)
     }
 }
