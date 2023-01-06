@@ -1,4 +1,4 @@
-package nl.hva.tangocity.ui.home
+package nl.hva.tangocity.ui.home.top
 
 import android.content.Context
 import android.view.LayoutInflater

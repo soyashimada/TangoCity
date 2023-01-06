@@ -1,4 +1,4 @@
-package nl.hva.tangocity.ui.home.calendar
+package nl.hva.tangocity.ui.home.top.calendar
 
 import android.view.View
 import android.view.ViewGroup
