@@ -9,19 +9,14 @@
         android:id="@+id/navigation_home"
         android:name="nl.hva.tangocity.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home" >
-        <action android:id="@+id/action_HomeFragment_to_ReviewFragment"
-            app:destination="@id/navigation_review" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_create"
-        android:name="nl.hva.tangocity.ui.create.CreateDialogFragment" />
+        android:name="nl.hva.tangocity.ui.create.CreateFragment"
+        android:layout="@layout/fragment_create" />
 
-    <fragment
-        android:id="@+id/navigation_review"
-        android:name="nl.hva.tangocity.ui.review.ReviewFragment"
-        tools:layout="@layout/fragment_review" >
-    </fragment>
+    <include app:graph="@navigation/home_navigation" />
 
     <include app:graph="@navigation/review_navigation" />
 

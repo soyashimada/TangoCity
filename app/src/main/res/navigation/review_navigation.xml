@@ -7,12 +7,17 @@
 
     <fragment
         android:id="@+id/navigation_study"
-        android:name="nl.hva.tangocity.ui.review.study.StudyFragment"
+        android:name="nl.hva.tangocity.ui.home.review.study.StudyFragment"
         tools:layout="@layout/fragment_study" />
 
     <fragment
         android:id="@+id/navigation_edit"
-        android:name="nl.hva.tangocity.ui.review.edit.EditFragment"
+        android:name="nl.hva.tangocity.ui.home.review.edit.EditFragment"
         tools:layout="@layout/fragment_edit" />
+
+    <fragment
+        android:id="@+id/navigation_create_card"
+        android:name="nl.hva.tangocity.ui.create.CreateFragment"
+        tools:layout="@layout/fragment_create" />
 
 </navigation>
