@@ -1,12 +1,12 @@
 package nl.hva.tangocity.model
 
 data class Card (
-    val id: Int,
-    val question: String,
-    val answer: String,
-    val repetition: Int = 0,
-    val easinessFactor: Float,
-    val interval: Int,
-    val nextDate: String,
-    val lastResult: Int
+    var id: Int,
+    var question: String,
+    var answer: String,
+    var repetition: Int = 0,
+    var easinessFactor: Double,
+    var interval: Int,
+    var nextDate: String,
+    var lastResult: Int
 )

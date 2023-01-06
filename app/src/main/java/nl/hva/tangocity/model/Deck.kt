@@ -1,7 +1,7 @@
 package nl.hva.tangocity.model
 
 data class Deck (
-    val id: Int,
-    val name: String,
-    val cards: ArrayList<Card>
+    var id: Int,
+    var name: String,
+    var cards: ArrayList<Card>
 )
