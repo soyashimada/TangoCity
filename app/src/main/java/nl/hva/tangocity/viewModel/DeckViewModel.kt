@@ -10,6 +10,8 @@ import kotlinx.coroutines.launch
 import nl.hva.tangocity.model.Card
 import nl.hva.tangocity.model.Deck
 import nl.hva.tangocity.repository.DeckRepository
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DeckViewModel(application: Application) : AndroidViewModel(application)  {
     private val TAG = "FIRESTORE"
@@ -64,7 +66,7 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
                         it[deckPosition].cards[cardPosition].question = question
                         it[deckPosition].cards[cardPosition].answer = answer
                     }else {
-                        it[deckPosition].cards.add(Card(newCardId, question, answer, 0,0.0,0,"0",0))
+                        it[deckPosition].cards.add(Card(newCardId, question, answer, 0,0.0,0,Calendar.getInstance(),0))
                     }
                 }
                 callback()

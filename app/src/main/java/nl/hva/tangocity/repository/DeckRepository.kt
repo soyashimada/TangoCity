@@ -3,11 +3,14 @@ package nl.hva.tangocity.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
 import nl.hva.tangocity.model.Card
 import nl.hva.tangocity.model.Deck
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DeckRepository {
     private var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -54,12 +57,15 @@ class DeckRepository {
                             val repetition = card.get("repetition").toString()
                             val easinessFactor = card.get("easinessFactor").toString()
                             val interval = card.get("interval").toString()
-                            val nextDate = card.get("nextDate").toString()
+                            val nextDate = card.get("nextDate") as Timestamp
                             val lastResult = card.get("lastResult").toString()
+
+                            val nextCal: Calendar = Calendar.getInstance()
+                            nextCal.time = nextDate.toDate()
 
                             cardsInDeck.add( Card( cardId.toInt(), question, answer,
                                 repetition.toInt(), easinessFactor.toDouble(),
-                                interval.toInt(), nextDate, lastResult.toInt() ))
+                                interval.toInt(), nextCal, lastResult.toInt() ))
                         }
                     }
                     cardsInDeck.sortBy { card -> card.id }
@@ -122,7 +128,7 @@ class DeckRepository {
                 "easinessFactor" to 0,
                 "interval" to 0,
                 "lastResult" to 0,
-                "nextDate" to "null",
+                "nextDate" to Timestamp.now(),
                 "repetition" to 0
             )
 
