@@ -70,17 +70,20 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
         }
     }
 
-    fun editCard(deckPosition: Int, cardPosition: Int ,card: Card, callback: () -> Unit) {
+    fun editCard(deckPosition: Int, card: Card, callback: () -> Unit) {
         viewModelScope.launch {
             try {
                 val deck: Deck? = decks.value?.get(deckPosition)
                 val deckId = deck?.id ?: 1
                 val timestamp = Timestamp(Date(card.nextDate.timeInMillis))
 
-                deckRepository.createCard( deckId, card.question, card.answer, card.id,
+                deckRepository.createCard(
+                    deckId, card.question, card.answer, card.id,
                     card.easinessFactor, card.interval, card.lastResult, timestamp, card.repetition)
 
-                deckRepository.decks.value?.get(deckPosition)!!.cards[cardPosition] = card
+                deckRepository.decks.value?.get(deckPosition)!!
+                    .cards.replaceAll{ if(it.id == card.id) { card } else it }
+
                 callback()
             } catch (ex: DeckRepository.SaveError) {
                 val errorMsg = "Something went wrong while saving the card"

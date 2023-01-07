@@ -74,7 +74,7 @@ class CreateFragment : Fragment() {
                 if (card != null && cardPosition!= null) {
                     card.question = question
                     card.answer = answer
-                    deckViewModel.editCard(deckPosition, cardPosition, card, backPage())
+                    deckViewModel.editCard(deckPosition, card, backPage())
                 }else {
                     deckViewModel.createCard(deckPosition, question, answer, backPage())
                 }
