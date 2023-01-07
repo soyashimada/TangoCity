@@ -10,15 +10,19 @@ import com.google.firebase.Timestamp
 import kotlinx.coroutines.launch
 import nl.hva.tangocity.model.Card
 import nl.hva.tangocity.model.Deck
+import nl.hva.tangocity.model.Review
 import nl.hva.tangocity.repository.DeckRepository
+import nl.hva.tangocity.repository.ReviewRepository
 import java.util.*
 import kotlin.collections.ArrayList
 
 class DeckViewModel(application: Application) : AndroidViewModel(application)  {
     private val TAG = "FIRESTORE"
     private val deckRepository: DeckRepository = DeckRepository()
+    private val reviewRepository: ReviewRepository = ReviewRepository()
 
     val decks: LiveData<ArrayList<Deck>> = deckRepository.decks
+    val reviews: LiveData<ArrayList<Review>> = reviewRepository.reviews
 
     private val _errorText: MutableLiveData<String> = MutableLiveData()
     val errorText: LiveData<String>
@@ -28,6 +32,7 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
         viewModelScope.launch {
             try {
                 deckRepository.initialize()
+                reviewRepository.initialize()
                 if (decks.value == null) {
                     _errorText.value = "No deck is set"
                 }
@@ -87,6 +92,25 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
                 callback()
             } catch (ex: DeckRepository.SaveError) {
                 val errorMsg = "Something went wrong while saving the card"
+                Log.e(TAG, ex.message ?: errorMsg)
+                _errorText.value = errorMsg
+            }
+        }
+    }
+
+    fun createReview(deckPosition: Int, cardId: Int, result: Int, reviewId: Int? = null) {
+        viewModelScope.launch {
+            try {
+                val deck: Deck? = decks.value?.get(deckPosition)
+                val deckId = deck?.id ?: 1
+                val timestamp = Timestamp.now()
+                val newReviewId = reviewRepository.createReview(deckId, cardId, result, timestamp, reviewId)
+                val date = Calendar.getInstance()
+                date.time = timestamp.toDate()
+
+                reviewRepository.reviews.value?.add(Review(newReviewId, deckId, cardId, result, date))
+            } catch (ex: DeckRepository.SaveError) {
+                val errorMsg = "Something went wrong while saving the review"
                 Log.e(TAG, ex.message ?: errorMsg)
                 _errorText.value = errorMsg
             }
