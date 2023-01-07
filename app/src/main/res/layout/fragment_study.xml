@@ -4,7 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/finish_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_baseline_done_outline_24"
+        android:visibility="invisible"
+        app:tint="@color/normal_icon"
+        android:contentDescription="finishIcon"
+        app:layout_constraintBottom_toTopOf="@id/answer_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/finish_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="You done!"
+        android:visibility="invisible"
+        style="@style/buttonText"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/finish_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_layout"
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:layout_margin="16dp"
@@ -85,6 +112,7 @@
         app:layout_constraintStart_toEndOf="@id/answer_1">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_answer_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="answer_2"
@@ -110,6 +138,7 @@
         app:layout_constraintStart_toEndOf="@id/answer_2">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_answer_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="answer_3"
@@ -135,6 +164,7 @@
         app:layout_constraintStart_toEndOf="@id/answer_3">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_answer_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="answer_4"
@@ -160,6 +190,7 @@
         app:layout_constraintStart_toEndOf="@id/answer_4">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_answer_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="answer_5"
