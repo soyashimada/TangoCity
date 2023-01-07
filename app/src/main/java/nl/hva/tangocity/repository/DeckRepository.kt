@@ -83,7 +83,6 @@ class DeckRepository {
                 _decks.value = deckList
             }
         } catch (e: Exception) {
-            Log.e("test", e.toString())
             throw RetrievalError("Retrieval-firebase-task was unsuccessful")
         }
     }
