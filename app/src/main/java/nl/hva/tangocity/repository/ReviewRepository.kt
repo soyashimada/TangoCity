@@ -43,10 +43,14 @@ class ReviewRepository {
 
                     val date: Calendar = Calendar.getInstance()
                     date.time = dateStamp.toDate()
+                    date.set(Calendar.MILLISECOND, 0)
+                    date.set(Calendar.SECOND, 0)
+                    date.set(Calendar.MINUTE, 0)
+                    date.set(Calendar.HOUR_OF_DAY, 0)
 
                     if ((lastReviewId.value!!) < id){ lastReviewId.value = id }
 
-                    reviewList += Review(id, deckId.toInt(), cardId.toInt(), result.toInt(), date)
+                    reviewList.add(Review(id, deckId.toInt(), cardId.toInt(), result.toInt(), date))
                     reviewList.sortBy { review -> review.date }
                 }
                 _reviews.value = reviewList

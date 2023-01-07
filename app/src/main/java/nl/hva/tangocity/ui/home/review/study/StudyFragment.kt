@@ -121,7 +121,10 @@ class StudyFragment : Fragment() {
         card.nextDate.add(Calendar.DATE, interval)
         card.lastResult = result
 
-        deckViewModel.editCard(deckPosition, card) { viewModel.nextCard() }
+        deckViewModel.editCard(deckPosition, card) {
+            deckViewModel.createReview(deckPosition, card.id, card.lastResult)
+            viewModel.nextCard()
+        }
     }
 
     private fun changeButtonsVisible(mode: Int) {

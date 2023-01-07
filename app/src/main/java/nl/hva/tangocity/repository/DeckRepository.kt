@@ -1,6 +1,5 @@
 package nl.hva.tangocity.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Timestamp
@@ -9,7 +8,6 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
 import nl.hva.tangocity.model.Card
 import nl.hva.tangocity.model.Deck
-import java.sql.Time
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -63,6 +61,9 @@ class DeckRepository {
 
                             val nextCal: Calendar = Calendar.getInstance()
                             nextCal.time = nextDate.toDate()
+                            nextCal.set(Calendar.MILLISECOND, 0)
+                            nextCal.set(Calendar.SECOND, 0)
+                            nextCal.set(Calendar.MINUTE, 0)
                             nextCal.set(Calendar.HOUR_OF_DAY, 0)
 
                             cardsInDeck.add( Card( cardId.toInt(), question, answer,
