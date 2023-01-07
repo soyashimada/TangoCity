@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Timestamp
 import kotlinx.coroutines.launch
 import nl.hva.tangocity.model.Card
 import nl.hva.tangocity.model.Deck
@@ -51,24 +52,35 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
         }
     }
 
-    fun createCard(deckPosition: Int, question: String, answer: String, cardPosition: Int? = null, callback: () -> Unit) {
+    fun createCard(deckPosition: Int, question: String, answer: String, callback: () -> Unit) {
         viewModelScope.launch {
             try {
                 val deck: Deck? = decks.value?.get(deckPosition)
                 val deckId = deck?.id ?: 1
-                val cardId = if (cardPosition != null)
-                    deck?.cards?.get(cardPosition)?.id ?: 1 else null
 
-                val newCardId = deckRepository.createCard(deckId, question, answer, cardId)
+                val newCardId = deckRepository.createCard(deckId, question, answer)
+                deckRepository.decks.value?.get(deckPosition)!!
+                    .cards.add(Card(newCardId, question, answer, 0,0.0,0,Calendar.getInstance(),0))
+                callback()
+            } catch (ex: DeckRepository.SaveError) {
+                val errorMsg = "Something went wrong while saving the card"
+                Log.e(TAG, ex.message ?: errorMsg)
+                _errorText.value = errorMsg
+            }
+        }
+    }
 
-                deckRepository.decks.value?.let {
-                    if (cardPosition != null && cardId != null){
-                        it[deckPosition].cards[cardPosition].question = question
-                        it[deckPosition].cards[cardPosition].answer = answer
-                    }else {
-                        it[deckPosition].cards.add(Card(newCardId, question, answer, 0,0.0,0,Calendar.getInstance(),0))
-                    }
-                }
+    fun editCard(deckPosition: Int, cardPosition: Int ,card: Card, callback: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                val deck: Deck? = decks.value?.get(deckPosition)
+                val deckId = deck?.id ?: 1
+                val timestamp = Timestamp(Date(card.nextDate.timeInMillis))
+
+                deckRepository.createCard( deckId, card.question, card.answer, card.id,
+                    card.easinessFactor, card.interval, card.lastResult, timestamp, card.repetition)
+
+                deckRepository.decks.value?.get(deckPosition)!!.cards[cardPosition] = card
                 callback()
             } catch (ex: DeckRepository.SaveError) {
                 val errorMsg = "Something went wrong while saving the card"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.collection.arrayMapOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -52,7 +53,7 @@ class CreateFragment : Fragment() {
         val cardPosition: Int? = reviewViewModel.selectedCardPosition.value
 
         val card: Card? = if (cardPosition != null){
-            deckViewModel.decks.value?.let { it[deckPosition].cards[cardPosition] }
+            deckViewModel.decks.value?.get(deckPosition)!!.cards[cardPosition]
         } else null
 
         binding.questionInput.setText(card?.question ?: "")
@@ -63,15 +64,21 @@ class CreateFragment : Fragment() {
         }
 
         binding.doneButton.setOnClickListener{
+            val question = binding.questionInput.text.toString()
+            val answer = binding.answerInput.text.toString()
+
             if (isNewDeck) {
                 deckViewModel.createDeckAndCard(binding.deckNameInput.text.toString(),
-                    binding.questionInput.text.toString(), binding.answerInput.text.toString(), backPage())
-
+                    question, answer, backPage())
             } else {
-                deckViewModel.createCard(deckPosition ?: 0, binding.questionInput.text.toString(),
-                    binding.answerInput.text.toString(), cardPosition, backPage())
+                if (card != null && cardPosition!= null) {
+                    card.question = question
+                    card.answer = answer
+                    deckViewModel.editCard(deckPosition, cardPosition, card, backPage())
+                }else {
+                    deckViewModel.createCard(deckPosition, question, answer, backPage())
+                }
             }
-
         }
     }
 

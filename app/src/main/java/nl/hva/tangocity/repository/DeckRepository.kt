@@ -9,6 +9,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
 import nl.hva.tangocity.model.Card
 import nl.hva.tangocity.model.Deck
+import java.sql.Time
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -119,18 +120,28 @@ class DeckRepository {
         }
     }
 
-    suspend fun createCard(deckId: Int, question: String, answer: String, cardId: Int? = null): Int {
+    suspend fun createCard(
+        deckId: Int,
+        question: String,
+        answer: String,
+        cardId: Int? = null,
+        ease: Double = 0.0,
+        interval: Int = 0,
+        lastResult: Int = 0,
+        nextDate: Timestamp = Timestamp.now(),
+        repetition: Int = 0
+    ): Int {
         try {
             val id = cardId ?: (lastCardId.value?.plus(1) ?: 1)
             val card = hashMapOf(
                 "question" to question,
                 "answer" to answer,
                 "deckRef" to deckDocument.document(deckId.toString()),
-                "easinessFactor" to 0,
-                "interval" to 0,
-                "lastResult" to 0,
-                "nextDate" to Timestamp.now(),
-                "repetition" to 0
+                "easinessFactor" to ease,
+                "interval" to interval,
+                "lastResult" to lastResult,
+                "nextDate" to nextDate,
+                "repetition" to repetition
             )
 
             withTimeout(5_000) {
