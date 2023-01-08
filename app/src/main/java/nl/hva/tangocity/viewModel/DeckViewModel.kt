@@ -13,6 +13,7 @@ import nl.hva.tangocity.model.Deck
 import nl.hva.tangocity.model.Review
 import nl.hva.tangocity.repository.DeckRepository
 import nl.hva.tangocity.repository.ReviewRepository
+import nl.hva.tangocity.resetTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -107,10 +108,7 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
                 val newReviewId = reviewRepository.createReview(deckId, cardId, result, timestamp, reviewId)
                 val date = Calendar.getInstance()
                 date.time = timestamp.toDate()
-                date.set(Calendar.MILLISECOND, 0)
-                date.set(Calendar.SECOND, 0)
-                date.set(Calendar.MINUTE, 0)
-                date.set(Calendar.HOUR_OF_DAY, 0)
+                date.resetTime()
 
                 reviewRepository.reviews.value?.add(Review(newReviewId, deckId, cardId, result, date))
             } catch (ex: DeckRepository.SaveError) {

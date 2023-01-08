@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
 import nl.hva.tangocity.model.Review
+import nl.hva.tangocity.resetTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -43,10 +44,7 @@ class ReviewRepository {
 
                     val date: Calendar = Calendar.getInstance()
                     date.time = dateStamp.toDate()
-                    date.set(Calendar.MILLISECOND, 0)
-                    date.set(Calendar.SECOND, 0)
-                    date.set(Calendar.MINUTE, 0)
-                    date.set(Calendar.HOUR_OF_DAY, 0)
+                    date.resetTime()
 
                     if ((lastReviewId.value!!) < id){ lastReviewId.value = id }
 

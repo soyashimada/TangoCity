@@ -23,6 +23,7 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.view.MonthDayBinder
 import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.FragmentTopBinding
+import nl.hva.tangocity.resetTime
 import nl.hva.tangocity.ui.home.top.calendar.DayViewContainer
 import nl.hva.tangocity.viewModel.DeckViewModel
 import java.time.YearMonth
@@ -83,10 +84,7 @@ class TopFragment : Fragment() {
             override fun bind(container: DayViewContainer, data: CalendarDay) {
                 val thisDay = Calendar.getInstance()
                 thisDay.set(data.date.year, data.date.monthValue-1, data.date.dayOfMonth)
-                thisDay.set(Calendar.MILLISECOND, 0)
-                thisDay.set(Calendar.SECOND, 0)
-                thisDay.set(Calendar.MINUTE, 0)
-                thisDay.set(Calendar.HOUR_OF_DAY, 0)
+                thisDay.resetTime()
 
                 val nextDay = thisDay.clone() as Calendar
                 nextDay.add(Calendar.DAY_OF_MONTH, 1)

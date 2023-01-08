@@ -8,6 +8,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
 import nl.hva.tangocity.model.Card
 import nl.hva.tangocity.model.Deck
+import nl.hva.tangocity.resetTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -61,10 +62,7 @@ class DeckRepository {
 
                             val nextCal: Calendar = Calendar.getInstance()
                             nextCal.time = nextDate.toDate()
-                            nextCal.set(Calendar.MILLISECOND, 0)
-                            nextCal.set(Calendar.SECOND, 0)
-                            nextCal.set(Calendar.MINUTE, 0)
-                            nextCal.set(Calendar.HOUR_OF_DAY, 0)
+                            nextCal.resetTime()
 
                             cardsInDeck.add( Card( cardId.toInt(), question, answer,
                                 repetition.toInt(), easinessFactor.toDouble(),
