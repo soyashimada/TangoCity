@@ -73,140 +73,220 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <FrameLayout
+    <TextView
+        android:id="@+id/button_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="How easy do you feel?"
+        style="@style/normalText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/answer_3"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
         android:id="@+id/answer_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/answer_2"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent" >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_answer_1"
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="answer_1"
-            app:backgroundTint="@color/button_color" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_answer_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="answer_1"
+                app:backgroundTint="@color/button_color" />
+
+            <TextView
+                android:id="@+id/button_answer_1_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="1"
+                style="@style/buttonText" />
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/button_answer_1_text"
+            android:id="@+id/button_caption_bad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="1"
-            style="@style/buttonText" />
-    </FrameLayout>
+            android:text="Bad"
+            style="@style/normalText" />
 
-    <FrameLayout
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/answer_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/answer_3"
-        app:layout_constraintStart_toEndOf="@id/answer_1">
+        app:layout_constraintStart_toEndOf="@id/answer_1" >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_answer_2"
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="answer_2"
-            app:backgroundTint="@color/button_color" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_answer_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="answer_2"
+                app:backgroundTint="@color/button_color" />
+
+            <TextView
+                android:id="@+id/button_answer_2_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="2"
+                style="@style/buttonText" />
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/button_answer_2_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="2"
-            style="@style/buttonText" />
-    </FrameLayout>
+            style="@style/normalText" />
 
-    <FrameLayout
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/answer_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/answer_4"
-        app:layout_constraintStart_toEndOf="@id/answer_2">
+        app:layout_constraintStart_toEndOf="@id/answer_2" >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_answer_3"
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="answer_3"
-            app:backgroundTint="@color/button_color" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_answer_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="answer_3"
+                app:backgroundTint="@color/button_color" />
+
+            <TextView
+                android:id="@+id/button_answer_3_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="3"
+                style="@style/buttonText" />
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/button_answer_3_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="3"
-            style="@style/buttonText" />
-    </FrameLayout>
+            style="@style/normalText" />
 
-    <FrameLayout
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/answer_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/answer_5"
-        app:layout_constraintStart_toEndOf="@id/answer_3">
+        app:layout_constraintStart_toEndOf="@id/answer_3" >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_answer_4"
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="answer_4"
-            app:backgroundTint="@color/button_color" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_answer_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="answer_4"
+                app:backgroundTint="@color/button_color" />
+
+            <TextView
+                android:id="@+id/button_answer_4_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="4"
+                style="@style/buttonText" />
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/button_answer_4_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="4"
-            style="@style/buttonText" />
-    </FrameLayout>
+            style="@style/normalText" />
 
-    <FrameLayout
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/answer_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/answer_4">
+        app:layout_constraintStart_toEndOf="@id/answer_4" >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_answer_5"
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="answer_5"
-            app:backgroundTint="@color/button_color" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_answer_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="answer_5"
+                app:backgroundTint="@color/button_color" />
+
+            <TextView
+                android:id="@+id/button_answer_5_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="5"
+                style="@style/buttonText" />
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/button_answer_5_text"
+            android:id="@+id/button_caption_perfect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="5"
-            style="@style/buttonText" />
-    </FrameLayout>
+            android:text="Perfect"
+            style="@style/normalText" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
