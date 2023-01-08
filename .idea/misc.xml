@@ -26,6 +26,7 @@
         <entry key="app/src/main/res/layout/fragment_study.xml" value="0.11930091185410334" />
         <entry key="app/src/main/res/layout/fragment_top.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_deck.xml" value="0.315582275390625" />
+        <entry key="app/src/main/res/layout/item_deck_name.xml" value="0.15020263424518743" />
         <entry key="app/src/main/res/layout/item_edit_deck.xml" value="0.1805535925440041" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>

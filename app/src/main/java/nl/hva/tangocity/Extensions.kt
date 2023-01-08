@@ -1,14 +1,18 @@
 package nl.hva.tangocity
 
 import android.content.Context
-import android.widget.Toast
+import android.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import java.util.*
 import kotlin.math.roundToInt
 
-fun Fragment.toast (text: String) {
-    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+fun Fragment.snackBar (text: String) {
+    Snackbar.make(requireView(), text, Snackbar.LENGTH_SHORT)
+        .setBackgroundTint(Color.parseColor(getColorCode(requireContext(), R.color.snack_bar_back)))
+        .setActionTextColor(Color.parseColor(getColorCode(requireContext(), R.color.normal_text)))
+        .show()
 }
 
 fun Calendar.resetTime () {

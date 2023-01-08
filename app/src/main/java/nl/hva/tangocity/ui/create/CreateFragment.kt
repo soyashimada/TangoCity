@@ -1,16 +1,19 @@
 package nl.hva.tangocity.ui.create
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.collection.arrayMapOf
+import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.FragmentCreateBinding
 import nl.hva.tangocity.model.Card
+import nl.hva.tangocity.snackBar
 import nl.hva.tangocity.viewModel.DeckViewModel
 import nl.hva.tangocity.viewModel.ReviewViewModel
 
@@ -19,7 +22,8 @@ class CreateFragment : Fragment() {
     private val binding get() = _binding!!
     private val deckViewModel: DeckViewModel by activityViewModels()
     private val reviewViewModel: ReviewViewModel by activityViewModels()
-    private var isNewDeck: Boolean = false
+    private var deckNameList: MutableList<String> = mutableListOf()
+    private var isFromBottomBar: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,11 +37,15 @@ class CreateFragment : Fragment() {
 
         // in the case of creating new deck from bottom bar
         requireActivity().supportFragmentManager.setFragmentResultListener("new_deck", this){requestKey, bundle ->
-            isNewDeck = true
+            isFromBottomBar = true
+            deckViewModel.decks.observe(viewLifecycleOwner){
+                it.forEach{ deck -> deckNameList.add(deck.name) }
+                changeDropDown()
+            }
             binding.deckNameInputLayout.isVisible = true
-            binding.isNewCheckbox.isVisible = true
             binding.questionInput.setText("")
             binding.answerInput.setText("")
+            changeDropDown()
         }
 
         return root
@@ -64,27 +72,71 @@ class CreateFragment : Fragment() {
         }
 
         binding.doneButton.setOnClickListener{
-            val question = binding.questionInput.text.toString()
-            val answer = binding.answerInput.text.toString()
+            if (validateForm()) {
+                val question = binding.questionInput.text.toString()
+                val answer = binding.answerInput.text.toString()
 
-            if (isNewDeck) {
-                deckViewModel.createDeckAndCard(binding.deckNameInput.text.toString(),
-                    question, answer, backPage())
-            } else {
-                if (card != null && cardPosition!= null) {
-                    card.question = question
-                    card.answer = answer
-                    deckViewModel.editCard(deckPosition, card, backPage())
-                }else {
-                    deckViewModel.createCard(deckPosition, question, answer, backPage())
+                if (isFromBottomBar) {
+                    deckViewModel.createDeckAndCard(binding.deckNameInput.text.toString(),
+                        question, answer, backPage())
+                } else {
+                    if (card != null && cardPosition!= null) {
+                        card.question = question
+                        card.answer = answer
+                        deckViewModel.editCard(deckPosition, card, backPage())
+                    }else {
+                        deckViewModel.createCard(deckPosition, question, answer, backPage())
+                    }
                 }
             }
         }
+
+        binding.isNewCheckbox.setOnCheckedChangeListener { _, _ ->
+            changeDropDown()
+        }
+    }
+
+    private fun validateForm(): Boolean {
+        if (isFromBottomBar) {
+            val inputText = binding.deckNameInput.text
+            if (inputText.isBlank()) {
+                snackBar("You need input 'DeckName'")
+                return false
+            }else if (binding.isNewCheckbox.isChecked) {
+                if (deckNameList.contains(inputText.toString())) {
+                    snackBar("You already made '$inputText'")
+                    return false
+                }
+            }
+        }
+
+        if (binding.questionInput.text.contentEquals("")) {
+            snackBar("You need input 'Question'")
+            return false
+        }
+
+        return true
     }
 
     private fun backPage(): () -> Unit{
         return {
             findNavController().popBackStack()
+        }
+    }
+
+    private fun changeDropDown() {
+        val nameInput = binding.deckNameInput
+        val checkbox = binding.isNewCheckbox
+
+        checkbox.isVisible = deckNameList.isNotEmpty()
+
+        if (!binding.isNewCheckbox.isChecked && deckNameList.isNotEmpty()) {
+            nameInput.inputType = InputType.TYPE_NULL
+            val adapter: ArrayAdapter<String> = ArrayAdapter(requireContext(), R.layout.item_deck_name, deckNameList)
+            nameInput.setAdapter(adapter)
+        } else {
+            nameInput.inputType = InputType.TYPE_CLASS_TEXT
+            nameInput.setAdapter(null)
         }
     }
 }
