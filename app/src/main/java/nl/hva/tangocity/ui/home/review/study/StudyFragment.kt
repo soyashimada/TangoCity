@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import nl.hva.tangocity.databinding.FragmentStudyBinding
 import nl.hva.tangocity.model.Card
+import nl.hva.tangocity.resetTime
 import nl.hva.tangocity.viewModel.DeckViewModel
 import nl.hva.tangocity.viewModel.ReviewViewModel
 import java.util.*
@@ -118,8 +119,12 @@ class StudyFragment : Fragment() {
         card.repetition = repetition
         card.easinessFactor = ease
         card.interval = interval
-        card.nextDate.add(Calendar.DATE, interval)
         card.lastResult = result
+
+        val nextDate = Calendar.getInstance()
+        nextDate.resetTime()
+        nextDate.add(Calendar.DATE, interval)
+        card.nextDate = nextDate
 
         deckViewModel.editCard(deckPosition, card) {
             deckViewModel.createReview(deckPosition, card.id, card.lastResult)
