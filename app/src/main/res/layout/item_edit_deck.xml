@@ -25,14 +25,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="6/Nov/2022"
                 style="@style/normalText"
                 android:textSize="12sp"/>
             <TextView
                 android:id="@+id/last_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Last Result: %d"
                 style="@style/normalText"
                 android:textSize="12sp"/>
         </LinearLayout>
@@ -41,14 +39,12 @@
             android:id="@+id/deck_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
             style="@style/boldText" />
 
         <TextView
             android:id="@+id/deck_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="answer"
             style="@style/normalText" />
 
     </LinearLayout>

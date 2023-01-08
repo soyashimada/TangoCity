@@ -18,7 +18,13 @@ class CardListAdapter(private val cards: ArrayList<Card>, private val clickListe
             val card = cards[position]
             binding.deckQuestion.text = card.question
             binding.deckAnswer.text = card.answer
-            binding.deckDate.text = card.nextDate.convertToDateText()
+            binding.deckDate.text = String.format("Next: %s", card.nextDate.convertToDateText())
+
+            card.lastResult.let {
+                if (it > 0) {
+                    binding.lastResult.text = String.format("Last Result: %d", it)
+                }
+            }
 
             binding.cardListItem.setOnClickListener{
                 clickListener(position)
