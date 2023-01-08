@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -23,7 +22,7 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.view.MonthDayBinder
 import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.FragmentTopBinding
-import nl.hva.tangocity.getColor
+import nl.hva.tangocity.getColorCode
 import nl.hva.tangocity.resetTime
 import nl.hva.tangocity.ui.home.top.calendar.DayViewContainer
 import nl.hva.tangocity.viewModel.DeckViewModel
@@ -31,7 +30,6 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.*
-import kotlin.math.roundToInt
 
 
 class TopFragment : Fragment() {
@@ -104,9 +102,9 @@ class TopFragment : Fragment() {
                         percent = percent.let {p -> if (p < 20) 20 else if (p > 60) 60 else p }
 
                         //update layout
-                        container.textView.setTextColor(Color.parseColor(getColor(requireContext(), R.color.normal_text)))
+                        container.textView.setTextColor(Color.parseColor(getColorCode(requireContext(), R.color.normal_text)))
                         val circle: ImageView = container.view.findViewById(R.id.calendarDayCircle)
-                        val colorCode = getColor(requireContext(), R.color.normal_icon, percent)
+                        val colorCode = getColorCode(requireContext(), R.color.normal_icon, percent)
                         circle.setColorFilter(Color.parseColor(colorCode))
                         circle.visibility = View.VISIBLE
                     }

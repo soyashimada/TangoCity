@@ -18,7 +18,7 @@ fun Calendar.resetTime () {
     this.set(Calendar.HOUR_OF_DAY, 0)
 }
 
-fun getColor(context: Context, color: Int, percent: Int? = null): String{
+fun getColorCode(context: Context, color: Int, percent: Int? = null): String{
     return ("#" + percentToHex(percent) + Integer.toHexString(
         ContextCompat.getColor(
             context, color

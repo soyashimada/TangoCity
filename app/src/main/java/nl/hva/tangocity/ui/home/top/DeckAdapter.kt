@@ -12,7 +12,7 @@ import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.charts.Pie
 import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.ItemDeckBinding
-import nl.hva.tangocity.getColor
+import nl.hva.tangocity.getColorCode
 import nl.hva.tangocity.model.Deck
 import kotlin.collections.ArrayList
 
@@ -25,10 +25,10 @@ class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Conte
         private val deckListView = binding.root.findViewById(R.id.deck_list_chart) as AnyChartView
 
         fun databind(deck: Deck, position: Int, clickListener: (Int) -> Unit) {
-            deckListView.setBackgroundColor(getColor(context, R.color.background))
+            deckListView.setBackgroundColor(getColorCode(context, R.color.background))
 
             val chart : Pie = AnyChart.pie()
-            chart.background().fill(getColor(context, R.color.background))
+            chart.background().fill(getColorCode(context, R.color.background))
             chart.innerRadius("85%")
             chart.legend(false)
             chart.labels(false)
@@ -46,9 +46,9 @@ class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Conte
                     matureCount += 1
                 }
             }
-            data.add( getDataEntry("New", newCount, getColor(context, R.color.new_color)))
-            data.add( getDataEntry("Mature", matureCount, getColor(context, R.color.mature_color)))
-            data.add( getDataEntry("Young", youngCount, getColor(context, R.color.young_color)))
+            data.add( getDataEntry("New", newCount, getColorCode(context, R.color.new_color)))
+            data.add( getDataEntry("Mature", matureCount, getColorCode(context, R.color.mature_color)))
+            data.add( getDataEntry("Young", youngCount, getColorCode(context, R.color.young_color)))
 
             chart.data(data)
             deckListView.setChart(chart)
