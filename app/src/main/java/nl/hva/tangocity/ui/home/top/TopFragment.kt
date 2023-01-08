@@ -23,6 +23,7 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.view.MonthDayBinder
 import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.FragmentTopBinding
+import nl.hva.tangocity.getColor
 import nl.hva.tangocity.resetTime
 import nl.hva.tangocity.ui.home.top.calendar.DayViewContainer
 import nl.hva.tangocity.viewModel.DeckViewModel
@@ -103,9 +104,9 @@ class TopFragment : Fragment() {
                         percent = percent.let {p -> if (p < 20) 20 else if (p > 60) 60 else p }
 
                         //update layout
-                        container.textView.setTextColor(Color.parseColor(getColor(R.color.normal_text)))
+                        container.textView.setTextColor(Color.parseColor(getColor(requireContext(), R.color.normal_text)))
                         val circle: ImageView = container.view.findViewById(R.id.calendarDayCircle)
-                        val colorCode = getColor(R.color.normal_icon, percent)
+                        val colorCode = getColor(requireContext(), R.color.normal_icon, percent)
                         circle.setColorFilter(Color.parseColor(colorCode))
                         circle.visibility = View.VISIBLE
                     }
@@ -150,18 +151,5 @@ class TopFragment : Fragment() {
         navController.navigate(
             R.id.action_TopFragment_to_ReviewFragment
         )
-    }
-
-    private fun getColor(color: Int, percent: Int = 100): String{
-        return ("#" + percentToHex(percent) + Integer.toHexString(
-            ContextCompat.getColor(
-                requireContext(), color
-            ) and 0x00ffffff).uppercase(Locale.getDefault())
-        )
-    }
-
-    private fun percentToHex(percent: Int): String{
-        return (255.0 * (percent / 100.0)).roundToInt().toString( 16 )
-            .uppercase(Locale.getDefault()).padStart(2, '0')
     }
 }

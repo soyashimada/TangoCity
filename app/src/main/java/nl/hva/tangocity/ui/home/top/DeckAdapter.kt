@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
@@ -13,6 +12,7 @@ import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.charts.Pie
 import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.ItemDeckBinding
+import nl.hva.tangocity.getColor
 import nl.hva.tangocity.model.Deck
 import kotlin.collections.ArrayList
 
@@ -25,10 +25,10 @@ class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Conte
         private val deckListView = binding.root.findViewById(R.id.deck_list_chart) as AnyChartView
 
         fun databind(deck: Deck, position: Int, clickListener: (Int) -> Unit) {
-            deckListView.setBackgroundColor(getColor(R.color.background))
+            deckListView.setBackgroundColor(getColor(context, R.color.background))
 
             val chart : Pie = AnyChart.pie()
-            chart.background().fill(getColor(R.color.background))
+            chart.background().fill(getColor(context, R.color.background))
             chart.innerRadius("85%")
             chart.legend(false)
             chart.labels(false)
@@ -46,9 +46,9 @@ class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Conte
                     matureCount += 1
                 }
             }
-            data.add( getDataEntry("New", newCount, getColor(R.color.new_color)))
-            data.add( getDataEntry("Mature", matureCount, getColor(R.color.mature_color)))
-            data.add( getDataEntry("Young", youngCount, getColor(R.color.young_color)))
+            data.add( getDataEntry("New", newCount, getColor(context, R.color.new_color)))
+            data.add( getDataEntry("Mature", matureCount, getColor(context, R.color.mature_color)))
+            data.add( getDataEntry("Young", youngCount, getColor(context, R.color.young_color)))
 
             chart.data(data)
             deckListView.setChart(chart)
@@ -80,14 +80,6 @@ class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Conte
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.databind(decks[position], position, clickListener)
-    }
-
-    private fun getColor(color: Int): String{
-        return "#" + Integer.toHexString(
-            ContextCompat.getColor(
-                context, color
-            ) and 0x00ffffff
-        )
     }
 
     private fun getDataEntry( x: String, value: Int, color: String): ValueDataEntry{
