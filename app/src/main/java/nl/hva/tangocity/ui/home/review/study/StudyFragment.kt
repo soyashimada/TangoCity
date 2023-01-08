@@ -44,17 +44,15 @@ class StudyFragment : Fragment() {
                     binding.finishImage.visibility = View.VISIBLE
                     binding.finishText.visibility = View.VISIBLE
                     binding.cardLayout.visibility = View.INVISIBLE
-                    changeButtonsVisible(View.INVISIBLE)
+                    changeButtonsVisible(false)
 
                 }else {
+                    changeButtonsVisible(side)
                     binding.questionContent.text = if (side) {
                         //answer
-                        changeButtonsVisible(View.VISIBLE)
                         studyCards[studyPosition].answer
-
                     } else {
                         //question
-                        changeButtonsVisible(View.INVISIBLE)
                         studyCards[studyPosition].question
                     }
                 }
@@ -66,23 +64,23 @@ class StudyFragment : Fragment() {
         }
 
         binding.buttonAnswer1.setOnClickListener{
-            calculateCardResult(1, viewModel.selectedDeckPosition.value!!, studyCards[studyPosition])
+            calculateCardResult(1 )
         }
 
         binding.buttonAnswer2.setOnClickListener{
-            calculateCardResult(2, viewModel.selectedDeckPosition.value!!, studyCards[studyPosition])
+            calculateCardResult(2 )
         }
 
         binding.buttonAnswer3.setOnClickListener{
-            calculateCardResult(3, viewModel.selectedDeckPosition.value!!, studyCards[studyPosition])
+            calculateCardResult(3 )
         }
 
         binding.buttonAnswer4.setOnClickListener{
-            calculateCardResult(4, viewModel.selectedDeckPosition.value!!, studyCards[studyPosition])
+            calculateCardResult(4 )
         }
 
         binding.buttonAnswer5.setOnClickListener{
-            calculateCardResult(5, viewModel.selectedDeckPosition.value!!, studyCards[studyPosition])
+            calculateCardResult(5 )
         }
 
         return root
@@ -93,7 +91,9 @@ class StudyFragment : Fragment() {
         _binding = null
     }
 
-    private fun calculateCardResult(result: Int, deckPosition: Int, card: Card) {
+    private fun calculateCardResult(result: Int) {
+        val deckPosition = viewModel.selectedDeckPosition.value!!
+        val card = studyCards[studyPosition]
         var repetition = card.repetition
         var ease: Double =  card.easinessFactor
         var interval = card.interval
@@ -132,11 +132,23 @@ class StudyFragment : Fragment() {
         }
     }
 
-    private fun changeButtonsVisible(mode: Int) {
-        binding.answer1.visibility = mode
-        binding.answer2.visibility = mode
-        binding.answer3.visibility = mode
-        binding.answer4.visibility = mode
-        binding.answer5.visibility = mode
+    private fun changeButtonsVisible(isShowAnswer: Boolean) {
+        var mode = View.INVISIBLE
+        var isClickable = false
+        if (isShowAnswer) {
+            mode = View.VISIBLE
+            isClickable = true
+        }
+        binding.buttonAnswer1Text.visibility = mode
+        binding.buttonAnswer2Text.visibility = mode
+        binding.buttonAnswer3Text.visibility = mode
+        binding.buttonAnswer4Text.visibility = mode
+        binding.buttonAnswer5Text.visibility = mode
+
+        binding.buttonAnswer1.isClickable = isClickable
+        binding.buttonAnswer2.isClickable = isClickable
+        binding.buttonAnswer3.isClickable = isClickable
+        binding.buttonAnswer4.isClickable = isClickable
+        binding.buttonAnswer5.isClickable = isClickable
     }
 }
