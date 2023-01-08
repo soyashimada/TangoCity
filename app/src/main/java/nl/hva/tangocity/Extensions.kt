@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -35,4 +36,8 @@ private fun percentToHex(percent: Int? = null): String{
     }
     return (255.0 * (percent / 100.0)).roundToInt().toString( 16 )
         .uppercase(Locale.getDefault()).padStart(2, '0')
+}
+
+fun Calendar.convertToDateText(): String {
+    return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(this.time)
 }

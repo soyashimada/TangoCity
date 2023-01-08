@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import nl.hva.tangocity.R
+import nl.hva.tangocity.convertToDateText
 import nl.hva.tangocity.databinding.ItemEditDeckBinding
 import nl.hva.tangocity.model.Card
-import java.text.SimpleDateFormat
 import java.util.*
 
 class CardListAdapter(private val cards: ArrayList<Card>, private val clickListener: (Int) -> Unit): RecyclerView.Adapter<CardListAdapter.ViewHolder>() {
@@ -18,7 +18,7 @@ class CardListAdapter(private val cards: ArrayList<Card>, private val clickListe
             val card = cards[position]
             binding.deckQuestion.text = card.question
             binding.deckAnswer.text = card.answer
-            binding.deckDate.text = convertToDateText(card.nextDate)
+            binding.deckDate.text = card.nextDate.convertToDateText()
 
             binding.cardListItem.setOnClickListener{
                 clickListener(position)
@@ -47,10 +47,6 @@ class CardListAdapter(private val cards: ArrayList<Card>, private val clickListe
      */
     override fun onBindViewHolder(holder: CardListAdapter.ViewHolder, position: Int) {
         holder.databind(position, clickListener)
-    }
-
-    private fun convertToDateText(calendar: Calendar): String {
-        return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
     }
 
 }

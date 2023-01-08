@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import nl.hva.tangocity.convertToDateText
 import nl.hva.tangocity.databinding.FragmentStudyBinding
 import nl.hva.tangocity.model.Card
 import nl.hva.tangocity.resetTime
+import nl.hva.tangocity.snackBar
 import nl.hva.tangocity.viewModel.DeckViewModel
 import nl.hva.tangocity.viewModel.ReviewViewModel
 import java.util.*
@@ -129,6 +131,7 @@ class StudyFragment : Fragment() {
         deckViewModel.editCard(deckPosition, card) {
             deckViewModel.createReview(deckPosition, card.id, card.lastResult)
             viewModel.nextCard()
+            snackBar("Next day is " + nextDate.convertToDateText())
         }
     }
 
@@ -139,6 +142,10 @@ class StudyFragment : Fragment() {
             mode = View.VISIBLE
             isClickable = true
         }
+        binding.buttonCaption.visibility = mode
+        binding.buttonCaptionBad.visibility = mode
+        binding.buttonCaptionPerfect.visibility = mode
+
         binding.buttonAnswer1Text.visibility = mode
         binding.buttonAnswer2Text.visibility = mode
         binding.buttonAnswer3Text.visibility = mode
