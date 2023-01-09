@@ -32,6 +32,8 @@ class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Conte
             chart.innerRadius("85%")
             chart.legend(false)
             chart.labels(false)
+            chart.width("105%")
+            chart.height("105%")
 
             val data: MutableList<DataEntry> = ArrayList()
             var newCount = 0
@@ -53,7 +55,12 @@ class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Conte
             chart.data(data)
             deckListView.setChart(chart)
 
-            binding.deckTitle.text = deck.name
+            binding.deckTitle.text = if (deck.name.length > 7) {
+                deck.name.take(7) + "..."
+            }else {
+                deck.name
+            }
+
             binding.deckSubTitle.text = String.format("New: %d\n Young: %d\nMature: %d", newCount, youngCount, matureCount)
             binding.deckScript.setOnClickListener{ clickListener(position) }
         }
