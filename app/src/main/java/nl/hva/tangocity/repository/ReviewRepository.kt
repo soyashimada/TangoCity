@@ -54,7 +54,7 @@ class ReviewRepository {
                 _reviews.value = reviewList
             }
         } catch (e: Exception) {
-            throw RetrievalError("Retrieval-firebase-task was unsuccessful")
+            throw RetrievalError("Retrieval-firebase-task (Review) was unsuccessful")
         }
     }
 
@@ -97,10 +97,11 @@ class ReviewRepository {
             }
 
         } catch (e: Exception) {
-            throw SaveError(e.message.toString(), e)
+            throw DeleteError(e.message.toString(), e)
         }
     }
 
+    class DeleteError(message: String, cause: Throwable) : Exception(message, cause)
     class SaveError(message: String, cause: Throwable) : Exception(message, cause)
     class RetrievalError(message: String) : Exception(message)
 }

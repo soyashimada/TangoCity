@@ -82,7 +82,7 @@ class DeckRepository {
                 _decks.value = deckList
             }
         } catch (e: Exception) {
-            throw RetrievalError("Retrieval-firebase-task was unsuccessful")
+            throw RetrievalError("Retrieval-firebase-task (Deck and Card) was unsuccessful")
         }
     }
 
@@ -168,7 +168,7 @@ class DeckRepository {
             }
 
         } catch (e: Exception) {
-            throw SaveError(e.message.toString(), e)
+            throw DeleteError(e.message.toString(), e)
         }
     }
 
@@ -181,7 +181,7 @@ class DeckRepository {
                     .await()
             }
         } catch (e: Exception) {
-            throw SaveError(e.message.toString(), e)
+            throw DeleteError(e.message.toString(), e)
         }
     }
 
@@ -194,7 +194,7 @@ class DeckRepository {
                     .await()
             }
         } catch (e: Exception) {
-            throw SaveError(e.message.toString(), e)
+            throw DeleteError(e.message.toString(), e)
         }
     }
 
@@ -210,10 +210,11 @@ class DeckRepository {
                 batch.commit()
             }
         } catch (e: Exception) {
-            throw SaveError(e.message.toString(), e)
+            throw DeleteError(e.message.toString(), e)
         }
     }
 
+    class DeleteError(message: String, cause: Throwable) : Exception(message, cause)
     class SaveError(message: String, cause: Throwable) : Exception(message, cause)
     class RetrievalError(message: String) : Exception(message)
 }

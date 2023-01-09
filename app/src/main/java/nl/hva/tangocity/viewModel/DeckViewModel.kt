@@ -43,6 +43,11 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
                 val errorMsg = "Something went wrong while retrieving deck"
                 Log.e(TAG, ex.message ?: errorMsg)
                 _errorText.value = errorMsg
+
+            } catch (ex: ReviewRepository.RetrievalError) {
+                val errorMsg = "Something went wrong while retrieving review"
+                Log.e(TAG, ex.message ?: errorMsg)
+                _errorText.value = errorMsg
             }
         }
     }
@@ -79,12 +84,12 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
                 }
 
                 callback()
-            } catch (ex: DeckRepository.SaveError) {
+            } catch (ex: DeckRepository.DeleteError) {
                 val errorMsg = "Something went wrong while deleting the deck in DeckRepository"
                 Log.e(TAG, ex.message ?: errorMsg)
                 _errorText.value = errorMsg
 
-            } catch (ex: ReviewRepository.SaveError) {
+            } catch (ex: ReviewRepository.DeleteError) {
                 val errorMsg = "Something went wrong while deleting the deck in ReviewRepository"
                 Log.e(TAG, ex.message ?: errorMsg)
                 _errorText.value = errorMsg
@@ -145,7 +150,7 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
                 date.resetTime()
 
                 reviewRepository.reviews.value?.add(Review(newReviewId, deckId, cardId, result, date))
-            } catch (ex: DeckRepository.SaveError) {
+            } catch (ex: ReviewRepository.SaveError) {
                 val errorMsg = "Something went wrong while saving the review"
                 Log.e(TAG, ex.message ?: errorMsg)
                 _errorText.value = errorMsg
