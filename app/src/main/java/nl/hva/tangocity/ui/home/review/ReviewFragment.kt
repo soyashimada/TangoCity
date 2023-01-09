@@ -1,9 +1,7 @@
 package nl.hva.tangocity.ui.home.review
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
@@ -35,6 +33,14 @@ class ReviewFragment : Fragment() {
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolBar.setupWithNavController(navController, appBarConfiguration)
+        binding.toolBar.setOnMenuItemClickListener{
+            when(it.itemId) {
+                R.id.action_delete -> {
+                    deleteDeck()
+                }
+            }
+            true
+        }
 
         setFragmentResultListener("selectedDeck"){ requestKey, bundle ->
             val position = bundle.getInt("position")
@@ -81,8 +87,13 @@ class ReviewFragment : Fragment() {
         })
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun deleteDeck() {
+        val deckPosition = viewModel.selectedDeckPosition.value
+        if (deckPosition != null) {
+            deckViewModel.deleteDeckWithCards(deckPosition) {
+                findNavController().navigate(R.id.navigation_top)
+            }
+        }
     }
+
 }

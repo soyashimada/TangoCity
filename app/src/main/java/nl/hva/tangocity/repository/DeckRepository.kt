@@ -86,7 +86,7 @@ class DeckRepository {
         }
     }
 
-    suspend fun createDeckAndCard(deckName: String, question: String, answer: String) {
+    suspend fun createDeckAndCard(deckName: String, question: String, answer: String){
         try {
             val deckId = createDeck(deckName)
             createCard(deckId, question, answer)
@@ -155,6 +155,60 @@ class DeckRepository {
             }
 
             return id
+        } catch (e: Exception) {
+            throw SaveError(e.message.toString(), e)
+        }
+    }
+
+    suspend fun deleteDeckWithCards(deck: Deck) {
+        try {
+            withTimeout(5_000) {
+                deleteCards(deck.cards)
+                deleteDeck(deck.id)
+            }
+
+        } catch (e: Exception) {
+            throw SaveError(e.message.toString(), e)
+        }
+    }
+
+    private suspend fun deleteDeck(deckId: Int) {
+        try {
+            withTimeout(5_000) {
+                deckDocument
+                    .document(deckId.toString())
+                    .delete()
+                    .await()
+            }
+        } catch (e: Exception) {
+            throw SaveError(e.message.toString(), e)
+        }
+    }
+
+    suspend fun deleteCard(cardId: Int) {
+        try {
+            withTimeout(5_000) {
+                cardDocument
+                    .document(cardId.toString())
+                    .delete()
+                    .await()
+            }
+        } catch (e: Exception) {
+            throw SaveError(e.message.toString(), e)
+        }
+    }
+
+    private suspend fun deleteCards(cards: List<Card>) {
+        try {
+            withTimeout(5_000) {
+                val batch = firestore.batch()
+
+                cards.forEach{ card ->
+                    batch.delete(cardDocument.document(card.id.toString()))
+                }
+
+                batch.commit()
+            }
         } catch (e: Exception) {
             throw SaveError(e.message.toString(), e)
         }

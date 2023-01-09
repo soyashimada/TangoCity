@@ -84,6 +84,23 @@ class ReviewRepository {
         }
     }
 
+    suspend fun deleteReviews(deckId: Int) {
+        try {
+            val reviewList = reviews.value?.filter { it.deckId == deckId } ?: arrayListOf()
+
+            withTimeout(5_000) {
+                val batch = firestore.batch()
+                reviewList.forEach { review ->
+                    batch.delete(reviewDocument.document(review.id.toString()))
+                }
+                batch.commit()
+            }
+
+        } catch (e: Exception) {
+            throw SaveError(e.message.toString(), e)
+        }
+    }
+
     class SaveError(message: String, cause: Throwable) : Exception(message, cause)
     class RetrievalError(message: String) : Exception(message)
 }
