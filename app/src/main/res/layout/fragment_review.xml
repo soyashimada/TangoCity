@@ -20,6 +20,7 @@
             android:background="@color/background"
             app:title="@string/app_name"
             app:titleCentered="true"
+            app:menu="@menu/top_deck_menu"
             app:popupTheme="@style/Theme.TangoCity.PopupOverlay" />
 
         <com.google.android.material.tabs.TabLayout
