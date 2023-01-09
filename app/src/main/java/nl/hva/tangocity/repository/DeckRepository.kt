@@ -90,6 +90,8 @@ class DeckRepository {
         try {
             val deckId = createDeck(deckName)
             createCard(deckId, question, answer)
+
+            initialize()
         } catch (e: Exception) {
             throw SaveError(e.message.toString(), e)
         }
