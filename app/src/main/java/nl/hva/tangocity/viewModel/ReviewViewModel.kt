@@ -33,19 +33,26 @@ class ReviewViewModel(application: Application) : AndroidViewModel(application) 
     val selectedCardPosition : LiveData<Int?>
         get() = _selectedCardPosition
 
-    fun updateStudyCards(cards: ArrayList<Card>?) {
+    fun updateStudyCards(cards: ArrayList<Card>?, callback: () -> Unit = {}){
         _studyCards.value = arrayListOf()
         cards?.forEach{
             if (it.nextDate <= Calendar.getInstance()) {
                 _studyCards.value?.add(it)
             }
         }
+        callback()
+    }
+
+    fun resetStudyPosition() {
         _studyPosition.value = 0
-        _currentCardSide.value = false
     }
 
     fun showAnswer() {
         _currentCardSide.value = true
+    }
+
+    fun hideAnswer() {
+        _currentCardSide.value = false
     }
 
     fun nextCard() {

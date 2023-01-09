@@ -42,21 +42,19 @@ class StudyFragment : Fragment() {
             viewModel.studyPosition.observe(viewLifecycleOwner) { position ->
                 studyPosition = position
                 if (studyCards.size <= (position ?: 0)) {
-                    // in the case that cards aren't left
-                    binding.finishImage.visibility = View.VISIBLE
-                    binding.finishText.visibility = View.VISIBLE
-                    binding.cardLayout.visibility = View.INVISIBLE
-                    changeButtonsVisible(false)
-
-                }else {
-                    changeButtonsVisible(side)
-                    binding.questionContent.text = if (side) {
-                        //answer
-                        studyCards[studyPosition].answer
-                    } else {
-                        //question
-                        studyCards[studyPosition].question
+                    // in the case of finishing studying
+                    val deck = deckViewModel.decks.value?.get(viewModel.selectedDeckPosition.value!!)
+                    viewModel.updateStudyCards(deck?.cards) {
+                        if (studyCards.isEmpty()) {
+                            // in the case that cards aren't left
+                            finishStudying()
+                        } else {
+                            viewModel.hideAnswer()
+                            viewModel.resetStudyPosition()
+                        }
                     }
+                }else {
+                    flipCard(side)
                 }
             }
         }
@@ -133,6 +131,24 @@ class StudyFragment : Fragment() {
             viewModel.nextCard()
             snackBar("Next day is " + nextDate.convertToDateText())
         }
+    }
+
+    private fun flipCard(side: Boolean) {
+        changeButtonsVisible(side)
+        binding.questionContent.text = if (side) {
+            //answer
+            studyCards[studyPosition].answer
+        } else {
+            //question
+            studyCards[studyPosition].question
+        }
+    }
+
+    private fun finishStudying () {
+        binding.finishImage.visibility = View.VISIBLE
+        binding.finishText.visibility = View.VISIBLE
+        binding.cardLayout.visibility = View.INVISIBLE
+        changeButtonsVisible(false)
     }
 
     private fun changeButtonsVisible(isShowAnswer: Boolean) {

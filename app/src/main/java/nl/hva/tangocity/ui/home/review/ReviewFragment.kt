@@ -44,6 +44,8 @@ class ReviewFragment : Fragment() {
             }
             val deck = deckViewModel.decks.value?.get(viewModel.selectedDeckPosition.value!!)
             viewModel.updateStudyCards(deck?.cards)
+            viewModel.resetStudyPosition()
+            viewModel.hideAnswer()
             binding.toolBar.title = deck?.name ?: "undefined"
         }
 
