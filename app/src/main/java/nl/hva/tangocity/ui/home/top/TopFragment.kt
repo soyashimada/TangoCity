@@ -46,8 +46,6 @@ class TopFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.initialize()
-
         _binding = FragmentTopBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

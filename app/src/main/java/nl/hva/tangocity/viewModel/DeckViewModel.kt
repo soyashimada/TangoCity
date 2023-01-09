@@ -29,14 +29,16 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
     val errorText: LiveData<String>
         get() = _errorText
 
-    fun initialize() {
+    init {
+        initialize()
+    }
+
+    private fun initialize() {
         viewModelScope.launch {
             try {
                 deckRepository.initialize()
                 reviewRepository.initialize()
-                if (decks.value == null) {
-                    _errorText.value = "No deck is set"
-                }
+
             } catch (ex: DeckRepository.RetrievalError) {
                 val errorMsg = "Something went wrong while retrieving deck"
                 Log.e(TAG, ex.message ?: errorMsg)
@@ -52,6 +54,38 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
                 callback()
             } catch (ex: DeckRepository.SaveError) {
                 val errorMsg = "Something went wrong while saving the deck"
+                Log.e(TAG, ex.message ?: errorMsg)
+                _errorText.value = errorMsg
+            }
+        }
+    }
+
+    fun deleteDeckWithCards(deckPosition: Int, callback: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                val deck: Deck? = decks.value?.get(deckPosition)
+
+                if (deck != null) {
+                    deckRepository.deleteDeckWithCards(deck)
+                    reviewRepository.deleteReviews(deck.id)
+
+                    deckRepository.decks.value?.remove(deck)
+                    reviewRepository.reviews.value?.removeIf { review ->
+                        review.deckId == deck.id
+                    }
+
+                } else {
+                    _errorText.value = "Deck couldn't be found"
+                }
+
+                callback()
+            } catch (ex: DeckRepository.SaveError) {
+                val errorMsg = "Something went wrong while deleting the deck in DeckRepository"
+                Log.e(TAG, ex.message ?: errorMsg)
+                _errorText.value = errorMsg
+
+            } catch (ex: ReviewRepository.SaveError) {
+                val errorMsg = "Something went wrong while deleting the deck in ReviewRepository"
                 Log.e(TAG, ex.message ?: errorMsg)
                 _errorText.value = errorMsg
             }
