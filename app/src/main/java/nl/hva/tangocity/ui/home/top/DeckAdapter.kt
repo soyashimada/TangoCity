@@ -53,9 +53,9 @@ class DeckAdapter(private val decks: ArrayList<Deck>, private val context: Conte
             chart.data(data)
             deckListView.setChart(chart)
 
-            //set click listener
             binding.deckTitle.text = deck.name
-            binding.deckTitle.setOnClickListener{ clickListener(position) }
+            binding.deckSubTitle.text = String.format("New: %d\n Young: %d\nMature: %d", newCount, youngCount, matureCount)
+            binding.deckScript.setOnClickListener{ clickListener(position) }
         }
     }
 
