@@ -107,6 +107,9 @@ class CreateFragment : Fragment() {
                     snackBar("You already made '$inputText'")
                     return false
                 }
+            }else if (!deckNameList.contains(inputText.toString())) {
+                snackBar("Please check 'Create New Deck' if you want to make new deck")
+                return false
             }
         }
 
