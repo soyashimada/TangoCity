@@ -17,6 +17,21 @@
         <item name="android:background">@color/background</item>
     </style>
 
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textColor">@color/bold_text</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App.Body.Text" parent="@style/MaterialAlertDialog.Material3.Body.Text" >
+        <item name="android:textColor">@color/normal_text</item>
+    </style>
+
+    <style name="Widget.App.NegativeButton" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/bold_text</item>
+    </style>
+
+    <style name="Widget.App.PositiveButton" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/done_button</item>
+    </style>
     <style name="boldText">
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">22sp</item>
