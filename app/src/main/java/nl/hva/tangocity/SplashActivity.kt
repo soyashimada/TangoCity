@@ -1,20 +1,18 @@
 package nl.hva.tangocity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
-import nl.hva.tangocity.viewModel.DeckViewModel
 
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Use Handler to wait 1 second before opening the MainActivity.
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(
                 Intent(

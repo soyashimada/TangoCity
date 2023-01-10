@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
         navView.setupWithNavController(navController)
 
-        navView.setOnItemSelectedListener() { item ->
+        navView.setOnItemSelectedListener { item ->
             return@setOnItemSelectedListener onNavItemDestinationSelected(
                 item,
                 navController

@@ -43,7 +43,7 @@ class ReviewFragment : Fragment() {
                         .setNegativeButton(resources.getString(R.string.dialog_negative)) { dialog, _ ->
                             dialog.cancel()
                         }
-                        .setPositiveButton(resources.getString(R.string.dialog_positive)) { dialog, _ ->
+                        .setPositiveButton(resources.getString(R.string.dialog_positive)) { _, _ ->
                             deleteDeck()
                         }
                         .show()
@@ -52,7 +52,7 @@ class ReviewFragment : Fragment() {
             true
         }
 
-        setFragmentResultListener("selectedDeck"){ requestKey, bundle ->
+        setFragmentResultListener("selectedDeck"){ _, bundle ->
             val position = bundle.getInt("position")
             if (viewModel.selectedDeckPosition.value != position){
                 viewModel.resetSelectedTab()
