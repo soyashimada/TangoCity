@@ -37,7 +37,7 @@ class CreateFragment : Fragment() {
         initializeView()
 
         // in the case of creating new deck from bottom bar
-        requireActivity().supportFragmentManager.setFragmentResultListener("new_deck", this){requestKey, bundle ->
+        requireActivity().supportFragmentManager.setFragmentResultListener("new_deck", this){ _, _ ->
             isFromBottomBar = true
             deckViewModel.decks.observe(viewLifecycleOwner){
                 it.forEach{ deck -> deckNameList.add(deck.name) }
