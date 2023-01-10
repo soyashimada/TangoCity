@@ -11,7 +11,7 @@
         android:src="@drawable/ic_baseline_done_outline_24"
         android:visibility="invisible"
         app:tint="@color/normal_icon"
-        android:contentDescription="finishIcon"
+        android:contentDescription="@string/study_finish_icon_description"
         app:layout_constraintBottom_toTopOf="@id/answer_3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="You done!"
+        android:text="@string/study_finish_message"
         android:visibility="invisible"
         style="@style/buttonText"
         android:textSize="24sp"
@@ -52,15 +52,15 @@
                 android:gravity="end"
                 android:src="@drawable/ic_baseline_edit_24"
                 android:background="@null"
+                android:contentDescription="@string/study_edit_icon_description"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/question_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="TextView"
                 style="@style/buttonText"
                 android:textColor="@color/white"
                 android:textSize="24sp"
@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="How easy do you feel?"
+        android:text="@string/study_button_message"
         style="@style/normalText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/answer_3"
@@ -106,7 +106,7 @@
                 android:id="@+id/button_answer_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="answer_1"
+                android:contentDescription="@string/study_button1_description"
                 app:backgroundTint="@color/button_color" />
 
             <TextView
@@ -114,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="1"
+                android:text="@string/study_button_1"
                 style="@style/buttonText" />
         </FrameLayout>
 
@@ -122,7 +122,7 @@
             android:id="@+id/button_caption_bad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bad"
+            android:text="@string/study_button_text_bad"
             style="@style/normalText" />
 
     </LinearLayout>
@@ -148,7 +148,7 @@
                 android:id="@+id/button_answer_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="answer_2"
+                android:contentDescription="@string/study_button2_description"
                 app:backgroundTint="@color/button_color" />
 
             <TextView
@@ -156,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="2"
+                android:text="@string/study_button_2"
                 style="@style/buttonText" />
         </FrameLayout>
 
@@ -188,7 +188,7 @@
                 android:id="@+id/button_answer_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="answer_3"
+                android:contentDescription="@string/study_button3_description"
                 app:backgroundTint="@color/button_color" />
 
             <TextView
@@ -196,7 +196,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="3"
+                android:text="@string/study_button_3"
                 style="@style/buttonText" />
         </FrameLayout>
 
@@ -228,7 +228,7 @@
                 android:id="@+id/button_answer_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="answer_4"
+                android:contentDescription="@string/study_button4_description"
                 app:backgroundTint="@color/button_color" />
 
             <TextView
@@ -236,7 +236,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="4"
+                android:text="@string/study_button_4"
                 style="@style/buttonText" />
         </FrameLayout>
 
@@ -268,7 +268,7 @@
                 android:id="@+id/button_answer_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="answer_5"
+                android:contentDescription="@string/study_button5_description"
                 app:backgroundTint="@color/button_color" />
 
             <TextView
@@ -276,7 +276,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="5"
+                android:text="@string/study_button_5"
                 style="@style/buttonText" />
         </FrameLayout>
 
@@ -284,7 +284,7 @@
             android:id="@+id/button_caption_perfect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Perfect"
+            android:text="@string/study_button_text_good"
             style="@style/normalText" />
 
     </LinearLayout>

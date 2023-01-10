@@ -21,7 +21,7 @@
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/create_cancel"
             style="@style/normalText"
             android:textSize="20sp"
             android:gravity="start"
@@ -32,7 +32,7 @@
             android:id="@+id/done_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Done"
+            android:text="@string/create_done"
             android:textColor="@color/done_button"
             android:textSize="20sp"
             android:gravity="end"
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="Deck name"
+            android:hint="@string/create_hint_deck_name"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             app:startIconDrawable="@drawable/ic_baseline_search_black_24"
             app:helperTextEnabled="true"
@@ -68,7 +68,7 @@
                 android:id="@+id/deck_name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="What desk is it in?"
+                android:hint="@string/create_hint_deck_name_active"
                 style="@style/normalText"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Create New Deck"
+            android:text="@string/create_checkbox_text"
             style="@style/normalText"
             app:buttonTint="@color/checkbox"/>
 
@@ -86,17 +86,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="Question"
+            android:hint="@string/create_hint_question"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:startIconDrawable="@drawable/ic_baseline_question_mark_24"
             app:helperTextEnabled="true"
-            app:helperText="*Required">
+            app:helperText="@string/create_helper_required">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/question_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="What is its question?"
                 style="@style/normalText"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,7 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="Answer"
+            android:hint="@string/create_hint_answer"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:startIconDrawable="@drawable/ic_baseline_priority_high_24">
 
@@ -112,7 +111,6 @@
                 android:id="@+id/answer_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="What is its answer?"
                 style="@style/normalText"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,12 +118,11 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/delete_card_fab"
-        android:contentDescription="delete_card_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:clickable="true"
         android:src="@drawable/ic_baseline_delete_24"
+        android:contentDescription="@string/create_fab_description"
         app:tint="@color/white"
         app:backgroundTint="@color/delete_fab"
         app:layout_constraintEnd_toEndOf="parent"

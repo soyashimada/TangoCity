@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/ic_baseline_arrow_forward_ios_black_24"
-        android:contentDescription="arrow_icon"
+        android:contentDescription="@string/deck_arrow_icon_description"
         app:tint="@color/normal_icon" />
 
 </LinearLayout>

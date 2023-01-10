@@ -6,11 +6,10 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_card_fab"
-        android:contentDescription="edit_deck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:clickable="true"
+        android:contentDescription="@string/edit_fab_description"
         android:src="@drawable/ic_baseline_add_24"
         app:backgroundTint="@color/normal_icon"
         app:layout_constraintEnd_toEndOf="parent"

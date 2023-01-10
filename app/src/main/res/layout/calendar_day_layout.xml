@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:visibility="invisible"
         android:src="@drawable/circle"
-        android:contentDescription="circle"/>
+        android:contentDescription="@string/calendar_circle_description"/>
 
     <TextView
         android:id="@+id/calendarDayText"
