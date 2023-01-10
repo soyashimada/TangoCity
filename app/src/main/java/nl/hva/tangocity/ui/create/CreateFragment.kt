@@ -64,7 +64,10 @@ class CreateFragment : Fragment() {
 
         val card: Card? = if (cardPosition != null){
             deckViewModel.decks.value?.get(deckPosition)!!.cards[cardPosition]
-        } else null
+        } else {
+            binding.deleteCardFab.isVisible = false
+            null
+        }
 
         binding.questionInput.setText(card?.question ?: "")
         binding.answerInput.setText(card?.answer ?: "")
@@ -76,7 +79,7 @@ class CreateFragment : Fragment() {
                 .setNegativeButton(resources.getString(R.string.dialog_negative)) { dialog, _ ->
                     dialog.cancel()
                 }
-                .setPositiveButton(resources.getString(R.string.dialog_positive)) { dialog, _ ->
+                .setPositiveButton(resources.getString(R.string.dialog_positive)) { _, _ ->
                     deckViewModel.deleteCard(deckPosition, card!!) {
                         findNavController().popBackStack()
                     }
