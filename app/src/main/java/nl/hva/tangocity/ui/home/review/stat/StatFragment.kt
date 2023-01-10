@@ -1,4 +1,4 @@
-package nl.hva.tangocity.ui.home.top
+package nl.hva.tangocity.ui.home.review.stat
 
 import android.graphics.Color
 import android.os.Bundle
@@ -6,46 +6,73 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResult
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.anychart.AnyChart
+import com.anychart.charts.Pie
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.view.MonthDayBinder
 import nl.hva.tangocity.*
-import nl.hva.tangocity.databinding.FragmentTopBinding
+import nl.hva.tangocity.databinding.FragmentStatBinding
+import nl.hva.tangocity.model.Deck
 import nl.hva.tangocity.ui.home.top.calendar.DayViewContainer
 import nl.hva.tangocity.viewModel.DeckViewModel
+import nl.hva.tangocity.viewModel.ReviewViewModel
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-
-class TopFragment : Fragment() {
-
-    private var _binding: FragmentTopBinding? = null
+class StatFragment : Fragment() {
+    private var _binding: FragmentStatBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: DeckViewModel by activityViewModels()
-
-    private lateinit var navController: NavController
+    private val deckViewModel: DeckViewModel by activityViewModels()
+    private val viewModel: ReviewViewModel by activityViewModels()
+    private var navController: NavController? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTopBinding.inflate(inflater, container, false)
+        _binding = FragmentStatBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        navController = parentFragment?.findNavController()
 
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolBar)
+        val deck = deckViewModel.decks.value?.get(viewModel.selectedDeckPosition.value!!) ?: return root
+        initCardCountsView(deck)
+        initCalendarView(root, deck)
 
-        val calendarView = binding.reviewCalendar
+        return root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initCardCountsView(deck: Deck){
+        val deckChart = binding.deckChart
+        deckChart.setBackgroundColor(getColorCode(requireContext(), R.color.background))
+        val chart : Pie = AnyChart.pie()
+        val counts = chart.makeDeckChart(requireContext(), deck.cards)
+        deckChart.setChart(chart)
+
+        deck.name.let {
+            binding.deckTitle.text = if (it.length > 10) {
+                it.take(10) + "..."
+            }else {
+                it
+            }
+        }
+        binding.deckSubTitle.text = String.format("Total: %d", deck.cards.size)
+        binding.deckInfo.text = String.format("New: %d\n Young: %d\nMature: %d", counts["New"], counts["Young"], counts["Mature"])
+    }
+
+    private fun initCalendarView(root: View, deck: Deck) {
+        val calendarView = binding.statCalendar
         val thisMonth = YearMonth.now()
         var currentMonth = thisMonth
         val titlesContainer = root.findViewById<ViewGroup>(R.id.titlesContainer)
@@ -65,9 +92,9 @@ class TopFragment : Fragment() {
                 nextDay.add(Calendar.DAY_OF_MONTH, 1)
 
                 container.textView.text = data.date.dayOfMonth.toString()
-                viewModel.reviews.observe(viewLifecycleOwner){
+                deckViewModel.reviews.observe(viewLifecycleOwner){
                     // the list of Review at this day
-                    val reviews = it.filter {review -> review.date >= thisDay && review.date < nextDay }
+                    val reviews = it.filter {review -> review.date >= thisDay && review.date < nextDay && review.deckId == deck.id }
 
                     // if user study at this day
                     if (reviews.isNotEmpty()) {
@@ -92,33 +119,5 @@ class TopFragment : Fragment() {
             currentMonth = currentMonth.minusMonths(1)
             calendarView.scrollToMonth(currentMonth)
         }
-
-        navController = findNavController()
-
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.decks.observe(viewLifecycleOwner){
-            val deckAdapter = DeckAdapter(viewModel.decks.value ?: arrayListOf(), requireContext()) { deckId: Int ->
-                deckClicked(deckId)
-            }
-            binding.rvDecks.layoutManager =
-                StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
-            binding.rvDecks.adapter = deckAdapter
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun deckClicked(position: Int) {
-        setFragmentResult("selectedDeck", bundleOf("position" to position))
-        navController.navigate(
-            R.id.action_TopFragment_to_ReviewFragment
-        )
     }
 }

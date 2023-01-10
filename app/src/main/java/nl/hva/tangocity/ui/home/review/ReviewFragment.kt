@@ -36,28 +36,21 @@ class ReviewFragment : Fragment() {
         binding.toolBar.setupWithNavController(navController, appBarConfiguration)
         binding.toolBar.setOnMenuItemClickListener{
             when(it.itemId) {
-                R.id.action_delete -> {
-                    MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(resources.getString(R.string.confirm_title_delete_deck))
-                        .setMessage(resources.getString(R.string.confirm_message_delete_deck))
-                        .setNegativeButton(resources.getString(R.string.dialog_negative)) { dialog, _ ->
-                            dialog.cancel()
-                        }
-                        .setPositiveButton(resources.getString(R.string.dialog_positive)) { _, _ ->
-                            deleteDeck()
-                        }
-                        .show()
-                }
+                R.id.action_delete -> { showConfirmDialog() }
             }
             true
         }
 
         setFragmentResultListener("selectedDeck"){ _, bundle ->
             val position = bundle.getInt("position")
+
+            // if deck users open now is same as last opened deck
             if (viewModel.selectedDeckPosition.value != position){
                 viewModel.resetSelectedTab()
                 viewModel.updateSelectedDeckPosition(position)
             }
+
+            // reset variable
             val deck = deckViewModel.decks.value?.get(viewModel.selectedDeckPosition.value!!)
             viewModel.updateStudyCards(deck?.cards)
             viewModel.resetStudyPosition()
@@ -81,12 +74,9 @@ class ReviewFragment : Fragment() {
                 viewModel.updateSelectedTab(tab.position)
                 when(tab.position)
                 {
-                    0 -> {
-                        navController?.navigate(R.id.navigation_study)
-                    }
-                    2 -> {
-                        navController?.navigate(R.id.navigation_edit)
-                    }
+                    0 -> { navController?.navigate(R.id.navigation_study) }
+                    1 -> { navController?.navigate(R.id.navigation_stat) }
+                    2 -> { navController?.navigate(R.id.navigation_edit) }
                 }
             }
 
@@ -104,6 +94,19 @@ class ReviewFragment : Fragment() {
                 findNavController().navigate(R.id.navigation_top)
             }
         }
+    }
+
+    private fun showConfirmDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.confirm_title_delete_deck))
+            .setMessage(resources.getString(R.string.confirm_message_delete_deck))
+            .setNegativeButton(resources.getString(R.string.dialog_negative)) { dialog, _ ->
+                dialog.cancel()
+            }
+            .setPositiveButton(resources.getString(R.string.dialog_positive)) { _, _ ->
+                deleteDeck()
+            }
+            .show()
     }
 
 }

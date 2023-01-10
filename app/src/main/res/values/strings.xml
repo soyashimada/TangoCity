@@ -27,6 +27,8 @@
     <string name="review_tab_text_study">Study</string>
     <string name="review_tab_text_stat">Stat</string>
     <string name="review_tab_text_edit">Edit</string>
+    <string name="stat_title_card_counts">Card Counts</string>
+    <string name="stat_title_calendar">Calendar</string>
     <string name="study_finish_message">You done!</string>
     <string name="study_button_message">How easy do you feel?</string>
     <string name="study_button_text_bad">Bad</string>

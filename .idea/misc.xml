@@ -24,6 +24,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.19067028985507245" />
         <entry key="app/src/main/res/layout/fragment_review.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_stat.xml" value="0.11550151975683891" />
         <entry key="app/src/main/res/layout/fragment_study.xml" value="0.11930091185410334" />
         <entry key="app/src/main/res/layout/fragment_top.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_deck.xml" value="0.315582275390625" />

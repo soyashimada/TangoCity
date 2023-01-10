@@ -11,6 +11,11 @@
         tools:layout="@layout/fragment_study" />
 
     <fragment
+        android:id="@+id/navigation_stat"
+        android:name="nl.hva.tangocity.ui.home.review.stat.StatFragment"
+        tools:layout="@layout/fragment_stat" />
+
+    <fragment
         android:id="@+id/navigation_edit"
         android:name="nl.hva.tangocity.ui.home.review.edit.EditFragment"
         tools:layout="@layout/fragment_edit" />
