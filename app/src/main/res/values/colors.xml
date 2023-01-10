@@ -21,4 +21,6 @@
     <color name="mature_color">#D91EA644</color>
     <color name="done_button">#CC6284FF</color>
     <color name="snack_bar_back">#FF313033</color>
+    <color name="dialog_back">#FF313033</color>
+    <color name="delete_fab">#99FF0000</color>
 </resources>

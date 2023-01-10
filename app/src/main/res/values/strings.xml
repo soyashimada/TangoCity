@@ -3,4 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_create">Create</string>
     <string name="title_delete">Delete</string>
+    <string name="confirm_title_delete_card">Delete this card?</string>
+    <string name="confirm_message_delete_card">You cannot undo this action</string>
+    <string name="confirm_title_delete_deck">Delete this deck?</string>
+    <string name="confirm_message_delete_deck">You cannot undo this action</string>
+    <string name="dialog_negative">Cancel</string>
+    <string name="dialog_positive">Accept</string>
 </resources>

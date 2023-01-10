@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.FragmentCreateBinding
 import nl.hva.tangocity.model.Card
@@ -43,6 +44,7 @@ class CreateFragment : Fragment() {
                 changeDropDown()
             }
             binding.deckNameInputLayout.isVisible = true
+            binding.deleteCardFab.isVisible = false
             binding.questionInput.setText("")
             binding.answerInput.setText("")
             changeDropDown()
@@ -66,6 +68,21 @@ class CreateFragment : Fragment() {
 
         binding.questionInput.setText(card?.question ?: "")
         binding.answerInput.setText(card?.answer ?: "")
+
+        binding.deleteCardFab.setOnClickListener{
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(resources.getString(R.string.confirm_title_delete_card))
+                .setMessage(resources.getString(R.string.confirm_message_delete_card))
+                .setNegativeButton(resources.getString(R.string.dialog_negative)) { dialog, _ ->
+                    dialog.cancel()
+                }
+                .setPositiveButton(resources.getString(R.string.dialog_positive)) { dialog, _ ->
+                    deckViewModel.deleteCard(deckPosition, card!!) {
+                        findNavController().popBackStack()
+                    }
+                }
+                .show()
+        }
 
         binding.cancelButton.setOnClickListener{
             findNavController().popBackStack()

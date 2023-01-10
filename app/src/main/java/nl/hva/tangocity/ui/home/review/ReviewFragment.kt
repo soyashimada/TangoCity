@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import nl.hva.tangocity.R
 import nl.hva.tangocity.databinding.FragmentReviewBinding
@@ -36,7 +37,16 @@ class ReviewFragment : Fragment() {
         binding.toolBar.setOnMenuItemClickListener{
             when(it.itemId) {
                 R.id.action_delete -> {
-                    deleteDeck()
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(resources.getString(R.string.confirm_title_delete_deck))
+                        .setMessage(resources.getString(R.string.confirm_message_delete_deck))
+                        .setNegativeButton(resources.getString(R.string.dialog_negative)) { dialog, _ ->
+                            dialog.cancel()
+                        }
+                        .setPositiveButton(resources.getString(R.string.dialog_positive)) { dialog, _ ->
+                            deleteDeck()
+                        }
+                        .show()
                 }
             }
             true

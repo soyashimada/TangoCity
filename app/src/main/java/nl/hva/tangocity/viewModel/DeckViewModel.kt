@@ -115,6 +115,22 @@ class DeckViewModel(application: Application) : AndroidViewModel(application)  {
         }
     }
 
+    fun deleteCard(deckPosition: Int, card: Card, callback: () -> Unit = {}) {
+        viewModelScope.launch {
+            try {
+                deckRepository.deleteCard(card.id)
+
+                deckRepository.decks.value?.get(deckPosition)!!
+                    .cards.remove(card)
+                callback()
+            } catch (ex: DeckRepository.DeleteError) {
+                val errorMsg = "Something went wrong while deleting the card"
+                Log.e(TAG, ex.message ?: errorMsg)
+                _errorText.value = errorMsg
+            }
+        }
+    }
+
     fun editCard(deckPosition: Int, card: Card, callback: () -> Unit) {
         viewModelScope.launch {
             try {
