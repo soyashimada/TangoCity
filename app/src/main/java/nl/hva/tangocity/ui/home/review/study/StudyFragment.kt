@@ -38,27 +38,42 @@ class StudyFragment : Fragment() {
             studyCards = it
         }
 
+        // the cycle of studying below
         viewModel.currentCardSide.observe(viewLifecycleOwner) { side ->
             viewModel.studyPosition.observe(viewLifecycleOwner) { position ->
+                // update study position
                 studyPosition = position
+
+                // in the case of finishing studying
                 if (studyCards.size <= (position ?: 0)) {
-                    // in the case of finishing studying
                     val deck = deckViewModel.decks.value?.get(viewModel.selectedDeckPosition.value!!)
+
+                    // update study cards and confirm whether cards are left yet or not
                     viewModel.updateStudyCards(deck?.cards) {
                         if (studyCards.isEmpty()) {
                             // in the case that cards aren't left
                             finishStudying()
                         } else {
+                            // in the case that cards are left
                             viewModel.hideAnswer()
                             viewModel.resetStudyPosition()
                         }
                     }
-                }else {
-                    flipCard(side)
-                }
+                // in the case to continue
+                }else { flipCard(side) }
             }
         }
 
+        bindingAnswerButtons()
+        return root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun bindingAnswerButtons() {
         binding.questionContent.setOnClickListener{
             viewModel.showAnswer()
         }
@@ -82,13 +97,6 @@ class StudyFragment : Fragment() {
         binding.buttonAnswer5.setOnClickListener{
             calculateCardResult(5 )
         }
-
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun calculateCardResult(result: Int) {
