@@ -7,6 +7,8 @@
     <string name="confirm_message_delete_card">You cannot undo this action</string>
     <string name="confirm_title_delete_deck">Delete this deck?</string>
     <string name="confirm_message_delete_deck">You cannot undo this action</string>
+    <string name="confirm_title_cancel">Do you really want to leave?</string>
+    <string name="confirm_message_cancel">You cannot undo this action</string>
     <string name="dialog_negative">Cancel</string>
     <string name="dialog_positive">Accept</string>
     <string name="create_cancel">Cancel</string>

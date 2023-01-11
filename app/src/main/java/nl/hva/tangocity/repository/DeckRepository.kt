@@ -26,10 +26,6 @@ class DeckRepository {
     val decks: LiveData<ArrayList<Deck>>
         get() = _decks
 
-    private val _createSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    val createSuccess: LiveData<Boolean>
-        get() = _createSuccess
-
     suspend fun initialize() {
         try {
             withTimeout(5_000) {
@@ -110,7 +106,6 @@ class DeckRepository {
                     .set(deck)
                     .await()
 
-                _createSuccess.value = true
                 lastDeckId.value = id
             }
 
@@ -150,7 +145,6 @@ class DeckRepository {
                     .set(card)
                     .await()
 
-                _createSuccess.value = true
                 lastCardId.value = id
             }
 

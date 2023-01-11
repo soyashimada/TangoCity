@@ -62,6 +62,7 @@ class CreateFragment : Fragment() {
         val deckPosition: Int = reviewViewModel.selectedDeckPosition.value ?: 0
         val cardPosition: Int? = reviewViewModel.selectedCardPosition.value
 
+        // null -> create new card / not null -> edit existing card
         val card: Card? = if (cardPosition != null){
             deckViewModel.decks.value?.get(deckPosition)!!.cards[cardPosition]
         } else {
@@ -72,6 +73,7 @@ class CreateFragment : Fragment() {
         binding.questionInput.setText(card?.question ?: "")
         binding.answerInput.setText(card?.answer ?: "")
 
+        //delete fab
         binding.deleteCardFab.setOnClickListener{
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(resources.getString(R.string.confirm_title_delete_card))
@@ -80,6 +82,9 @@ class CreateFragment : Fragment() {
                     dialog.cancel()
                 }
                 .setPositiveButton(resources.getString(R.string.dialog_positive)) { _, _ ->
+                    deckViewModel.errorText.observe(viewLifecycleOwner) {
+                        snackBar(it)
+                    }
                     deckViewModel.deleteCard(deckPosition, card!!) {
                         findNavController().popBackStack()
                     }
@@ -87,12 +92,26 @@ class CreateFragment : Fragment() {
                 .show()
         }
 
+        // cancel button
         binding.cancelButton.setOnClickListener{
-            findNavController().popBackStack()
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(resources.getString(R.string.confirm_title_cancel))
+                .setMessage(resources.getString(R.string.confirm_message_cancel))
+                .setNegativeButton(resources.getString(R.string.dialog_negative)) { dialog, _ ->
+                    dialog.cancel()
+                }
+                .setPositiveButton(resources.getString(R.string.dialog_positive)) { _, _ ->
+                    findNavController().popBackStack()
+                }
+                .show()
         }
 
         binding.doneButton.setOnClickListener{
             if (validateForm()) {
+                deckViewModel.errorText.observe(viewLifecycleOwner) {
+                    snackBar(it)
+                }
+
                 val question = binding.questionInput.text.toString()
                 val answer = binding.answerInput.text.toString()
 

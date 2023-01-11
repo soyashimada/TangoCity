@@ -22,10 +22,6 @@ class ReviewRepository {
 
     private val lastReviewId: MutableLiveData<Int> = MutableLiveData(1)
 
-    private val _createSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    val createSuccess: LiveData<Boolean>
-        get() = _createSuccess
-
     suspend fun initialize() {
         try {
             withTimeout(5_000) {
@@ -74,7 +70,6 @@ class ReviewRepository {
                     .set(review)
                     .await()
 
-                _createSuccess.value = true
                 lastReviewId.value = id
             }
 
