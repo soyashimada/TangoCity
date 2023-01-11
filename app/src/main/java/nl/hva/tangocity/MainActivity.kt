@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             when(item.itemId)
             {
                 R.id.navigation_create -> {
+                    // notify that user come from bottom bar to CreateFragment
                     supportFragmentManager.setFragmentResult("new_deck", bundleOf())
                     onCreateFragment(findNavController(R.id.nav_host_fragment_activity_main))
                 }

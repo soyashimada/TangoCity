@@ -79,6 +79,7 @@ class TopFragment : Fragment() {
             }
         }
 
+        // binding
         val formatter = DateTimeFormatter.ofPattern("LLL yyyy")
         calendarView.monthScrollListener = {
             binding.monthYearTxt.text = it.yearMonth.format(formatter)
@@ -100,6 +101,8 @@ class TopFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // set recyclerView
         viewModel.decks.observe(viewLifecycleOwner){
             val deckAdapter = DeckAdapter(viewModel.decks.value ?: arrayListOf(), requireContext()) { deckId: Int ->
                 deckClicked(deckId)

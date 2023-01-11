@@ -34,7 +34,10 @@ class EditFragment : Fragment() {
         val root: View = binding.root
         navController = parentFragment?.findNavController()
 
+        //add card button
         binding.addCardFab.setOnClickListener{ cardClicked(null) }
+
+        // set recyclerView
         binding.rvCardList.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 

@@ -36,11 +36,12 @@ class ReviewFragment : Fragment() {
         binding.toolBar.setupWithNavController(navController, appBarConfiguration)
         binding.toolBar.setOnMenuItemClickListener{
             when(it.itemId) {
-                R.id.action_delete -> { showConfirmDialog() }
+                R.id.action_delete -> { showConfirmDeleteDialog() }
             }
             true
         }
 
+        //receive what deck is selected
         setFragmentResultListener("selectedDeck"){ _, bundle ->
             val position = bundle.getInt("position")
 
@@ -65,10 +66,12 @@ class ReviewFragment : Fragment() {
         val nestedNavHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment_fragment_review) as? NavHostFragment
         val navController = nestedNavHostFragment?.navController
 
+        // save a position of tab
         viewModel.selectedTab.observe(viewLifecycleOwner){
             binding.tabLayout.selectTab(binding.tabLayout.getTabAt(it))
         }
 
+        // set tab bar
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {
                 viewModel.updateSelectedTab(tab.position)
@@ -96,7 +99,7 @@ class ReviewFragment : Fragment() {
         }
     }
 
-    private fun showConfirmDialog() {
+    private fun showConfirmDeleteDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.confirm_title_delete_deck))
             .setMessage(resources.getString(R.string.confirm_message_delete_deck))

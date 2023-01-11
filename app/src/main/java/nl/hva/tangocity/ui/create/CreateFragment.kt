@@ -106,6 +106,7 @@ class CreateFragment : Fragment() {
                 .show()
         }
 
+        // done button
         binding.doneButton.setOnClickListener{
             if (validateForm()) {
                 deckViewModel.errorText.observe(viewLifecycleOwner) {

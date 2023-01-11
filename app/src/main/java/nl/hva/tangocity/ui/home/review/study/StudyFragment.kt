@@ -106,6 +106,7 @@ class StudyFragment : Fragment() {
         var ease: Double =  card.easinessFactor
         var interval = card.interval
 
+        // calculate how long later user will study this card
         if (result >= 3) {
             //correct response
             interval = when (repetition) {
@@ -134,6 +135,7 @@ class StudyFragment : Fragment() {
         nextDate.add(Calendar.DATE, interval)
         card.nextDate = nextDate
 
+        //edit card info
         deckViewModel.editCard(deckPosition, card) {
             deckViewModel.createReview(deckPosition, card.id, card.lastResult)
             viewModel.nextCard()
